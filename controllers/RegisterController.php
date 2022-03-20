@@ -9,6 +9,6 @@ class RegisterController extends Controller
 {
    public function actionIndex() 
    {
-      return $this->render('register');
+      return $this->render('index');
    }
 }
