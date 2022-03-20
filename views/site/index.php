@@ -323,30 +323,4 @@ $this->title = 'Куплю Продам';
     </div>
   </section>
 </main>
-<footer class="page-footer">
-  <div class="page-footer__wrapper">
-    <div class="page-footer__col">
-      <a href="#" class="page-footer__logo-academy" aria-label="Ссылка на сайт HTML-Академии">
-        <svg width="132" height="46">
-          <use xlink:href="img/sprite_auto.svg#logo-htmlac"></use>
-        </svg>
-      </a>
-      <p class="page-footer__copyright">© 2019 Проект Академии</p>
-    </div>
-    <div class="page-footer__col">
-      <a href="<?= Url::to('/') ?>" class="page-footer__logo logo">
-        <img src="img/logo.svg" width="179" height="35" alt="Логотип Куплю Продам">
-      </a>
-    </div>
-    <div class="page-footer__col">
-      <ul class="page-footer__nav">
-        <li>
-          <a href="sign-up.html">Вход и регистрация</a>
-        </li>
-        <li>
-          <a href="new-ticket.html">Создать объявление</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</footer>
+
