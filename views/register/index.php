@@ -1,15 +1,33 @@
 <?php
-use yii\bootstrap4\Html;
+use yii\widgets\ActiveForm;
+use \yii\helpers\Html;
 use yii\helpers\Url;
 
-/** @var yii\web\View $this */
 
 $this->title = 'Регистрация';
 ?>
+
 <main class="page-content">
     <section class="sign-up">
       <h1 class="visually-hidden">Регистрация</h1>
-      <form class="sign-up__form form" action="#" method="post" enctype="multipart/form-data" autocomplete="off">
+      <!--<form class="sign-up__form form" action="#" method="post" enctype="multipart/form-data" autocomplete="off">-->
+      <?php $form = ActiveForm::begin([
+            'id' => 'sign-up',
+            'method' => 'post',
+            'options' => ['class' => 'sign-up__form form'],
+            'fieldConfig' => [
+               // 'enableAjaxValidation' => false,
+               // 'enableClientValidation' => true,
+                'template' => "{label}\n{input}\n{error}",
+                'inputOptions' => ['class' => 'js-field'],
+               // 'errorOptions' => ['tag' => 'span', 'class' => 'registration__text-error'],
+               // 'options' => [
+               //     'tag' => 'div',
+               //     'class' => 'field-container field-container--registration',
+               // ]
+               ],
+
+        ]); ?>
         <div class="sign-up__title">
           <h2>Регистрация</h2>
           <a class="sign-up__link" href="login.html">Вход</a>
@@ -25,23 +43,19 @@ $this->title = 'Регистрация';
           </div>
         </div>
         <div class="form__field sign-up__field">
-          <input type="text" name="user-name" id="user-name" class="js-field" required="">
-          <label for="user-name">Имя и фамилия</label>
+          <?= $form->field($model, 'name')->textInput()->label('Имя и фамилия'); ?>
           <span>Обязательное поле</span>
         </div>
         <div class="form__field sign-up__field">
-          <input type="email" name="user-email" id="user-email" class="js-field" required="">
-          <label for="user-email">Эл. почта</label>
+          <?= $form->field($model, 'email')->input('email')->label('Эл. почта'); ?>
           <span>Неверный email</span>
         </div>
         <div class="form__field sign-up__field">
-          <input type="password" name="user-password" id="user-password" class="js-field" required="">
-          <label for="user-password">Пароль</label>
+          <?= $form->field($model, 'password')->passwordInput()->label('Пароль'); ?>
           <span>Обязательное поле</span>
         </div>
         <div class="form__field sign-up__field">
-          <input type="password" name="user-password-again" id="user-password-again" class="js-field" required="">
-          <label for="user-password-again">Пароль еще раз</label>
+          <?= $form->field($model, 'password_repeat')->passwordInput()->label('Пароль еще раз'); ?>
           <span>Пароли не совпадают</span>
         </div>
         <button class="sign-up__button btn btn--medium js-button" type="submit" disabled="">Создать аккаунт</button>
@@ -49,6 +63,7 @@ $this->title = 'Регистрация';
           Войти через
           <span class="icon icon--vk"></span>
         </a>
-      </form>
+      <!--</form>-->
+      <?php ActiveForm::end() ?>
     </section>
   </main>
