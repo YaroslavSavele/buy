@@ -42,6 +42,7 @@ class User extends \yii\db\ActiveRecord
             [['avatar'], 'file', 'extensions' => 'png, jpg'],
             [['is_moderator'], 'integer'],
             [['name', 'email'], 'string', 'max' => 128],
+            ['name', 'match', 'pattern' => "/[а-яА-ЯЁёa-zA-Z\s]/",  'message' => 'Имя не должно содержать цифр и специальных символов'],
             [['password', 'password_repeat'], 'string',  'length' => [6, 128], 'message' => 'Пароль должен быть не меньше 6 символов'],
             [['password_repeat'], 'compare', 'compareAttribute' => 'password'],
             [['email'], 'unique', 'message' => 'Пользователь с таким имейлом уже зарегестрирован'],
