@@ -11,7 +11,6 @@ class RegisterController extends Controller
    public function actionIndex() 
    {
       $model = new User;
-
       return $this->render('index', ['model' => $model]);
    }
 }
