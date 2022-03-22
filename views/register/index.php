@@ -1,8 +1,8 @@
 <?php
 use yii\widgets\ActiveForm;
-use \yii\helpers\Html;
+use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
+
 
 
 $this->title = 'Регистрация';
@@ -30,7 +30,7 @@ $this->title = 'Регистрация';
                ],
 
         ]); ?>
-        
+
         <div class="sign-up__title">
           <h2>Регистрация</h2>
           <a class="sign-up__link" href="login.html">Вход</a>
@@ -48,7 +48,6 @@ $this->title = 'Регистрация';
         <div class="form__field sign-up__field">
           <?= $form->field($model, 'name')->textInput()->label('Имя и фамилия'); ?>
           <span>Обязательное поле</span>
-          <?= $form->field($model, 'name')->textInput()->label('Имя и фамилия'); ?>
         </div>
         <div class="form__field sign-up__field">
           <?= $form->field($model, 'email')->input('email')->label('Эл. почта'); ?>
@@ -62,7 +61,7 @@ $this->title = 'Регистрация';
           <?= $form->field($model, 'password_repeat')->passwordInput()->label('Пароль еще раз'); ?>
           <span>Пароли не совпадают</span>
         </div>
-        <button class="sign-up__button btn btn--medium js-button" type="submit" disabled="">Создать аккаунт</button>
+        <?= Html::submitButton('Создать аккаунт', ['class' => 'sign-up__button btn btn--medium js-button']) ?>
         <a class="btn btn--small btn--flex btn--white" href="#">
           Войти через
           <span class="icon icon--vk"></span>

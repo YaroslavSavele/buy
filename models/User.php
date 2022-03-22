@@ -36,12 +36,15 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email'], 'required'],
-            [['date_registration'], 'safe'],
+            [['name', 'email', 'password', 'password_repeat'], 'required', 'message' => 'Обязательное поле'],
+            [['date_registration', 'is_moderator'], 'safe'],
+            [['email'], 'email', 'message' => 'Некорректный email'],
+            [['avatar'], 'file', 'extensions' => 'png, jpg'],
             [['is_moderator'], 'integer'],
             [['name', 'email'], 'string', 'max' => 128],
-            [['password', 'avatar'], 'string', 'max' => 255],
-            [['email'], 'unique'],
+            [['password', 'password_repeat'], 'string',  'length' => [6, 128], 'message' => 'Пароль должен быть не меньше 6 символов'],
+            [['password_repeat'], 'compare', 'compareAttribute' => 'password'],
+            [['email'], 'unique', 'message' => 'Пользователь с таким имейлом уже зарегестрирован'],
         ];
     }
 
