@@ -1,6 +1,7 @@
 <?php
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 
@@ -9,7 +10,12 @@ $this->title = 'Регистрация';
 <main class="page-content">
     <section class="sign-up">
       <h1 class="visually-hidden">Регистрация</h1>
-      <form class="sign-up__form form" action="#" method="post" enctype="multipart/form-data" autocomplete="off">
+      <!--<form class="sign-up__form form" action="#" method="post" enctype="multipart/form-data" autocomplete="off">-->
+      <?php $form = ActiveForm::begin([
+    'id' => 'sign-up__form',
+    'method' => 'post',
+    'options' => ['class' => 'sign-up__form form'],
+]) ?>
         <div class="sign-up__title">
           <h2>Регистрация</h2>
           <a class="sign-up__link" href="login.html">Вход</a>
@@ -28,6 +34,7 @@ $this->title = 'Регистрация';
           <input type="text" name="user-name" id="user-name" class="js-field" required="">
           <label for="user-name">Имя и фамилия</label>
           <span>Обязательное поле</span>
+          <?= $form->field($model, 'name')->textInput()->label('Имя и фамилия'); ?>
         </div>
         <div class="form__field sign-up__field">
           <input type="email" name="user-email" id="user-email" class="js-field" required="">
@@ -49,6 +56,7 @@ $this->title = 'Регистрация';
           Войти через
           <span class="icon icon--vk"></span>
         </a>
-      </form>
+      <!--</form>-->
+      <?php ActiveForm::end() ?>
     </section>
   </main>
