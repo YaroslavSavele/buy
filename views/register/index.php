@@ -38,8 +38,9 @@ $this->title = 'Регистрация';
         <div class="sign-up__avatar-container js-preview-container">
           <div class="sign-up__avatar js-preview"></div>
           <div class="sign-up__field-avatar">
-            <input type="file" id="avatar" name="avatar" class="visually-hidden js-file-field">
-            <label for="avatar">
+            <!--<input type="file" id="avatar" name="avatar" class="visually-hidden js-file-field">
+            <label for="avatar">-->
+            <?= $form->field($model, 'imageFile', ['options' => ['class' => 'visually-hidden js-file-field', 'id' => 'avatar' ]])->fileInput() ?>
               <span class="sign-up__text-upload">Загрузить аватар…</span>
               <span class="sign-up__text-another">Загрузить другой аватар…</span>
             </label>

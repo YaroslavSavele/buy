@@ -22,6 +22,7 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord
 {
    public $password_repeat;
+   public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -39,7 +40,7 @@ class User extends \yii\db\ActiveRecord
             [['name', 'email', 'password', 'password_repeat'], 'required', 'message' => 'Обязательное поле'],
             [['date_registration', 'is_moderator'], 'safe'],
             [['email'], 'email', 'message' => 'Некорректный email'],
-            [['avatar'], 'file', 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'extensions' => 'png, jpg'],
             [['is_moderator'], 'integer'],
             [['name', 'email'], 'string', 'max' => 128],
             ['name', 'match', 'pattern' => "/[а-яА-ЯЁёa-zA-Z\s]/",  'message' => 'Имя не должно содержать цифр и специальных символов'],
@@ -83,5 +84,13 @@ class User extends \yii\db\ActiveRecord
     public function getOffers()
     {
         return $this->hasMany(Offer::className(), ['user_id' => 'id']);
+    }
+
+    public function upload()
+    {
+        if ($this->imageFile) {
+            $this->avatar ='uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+         }
     }
 }
