@@ -40,10 +40,10 @@ $this->title = 'Регистрация';
           <div class="sign-up__field-avatar">
             <!--<input type="file" id="avatar" name="avatar" class="visually-hidden js-file-field">
             <label for="avatar">-->
-            <?= $form->field($model, 'imageFile', ['options' => ['class' => 'visually-hidden js-file-field', 'id' => 'avatar' ]])->fileInput() ?>
-              <span class="sign-up__text-upload">Загрузить аватар…</span>
+            <?= $form->field($model, 'imageFile')->fileInput() ?>
+              <!--<span class="sign-up__text-upload">Загрузить аватар…</span>
               <span class="sign-up__text-another">Загрузить другой аватар…</span>
-            </label>
+            </label>-->
           </div>
         </div>
         <div class="form__field sign-up__field">

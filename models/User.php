@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\UploadedFile;
 /**
  * This is the model class for table "users".
  *
@@ -38,7 +39,7 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'email', 'password', 'password_repeat'], 'required', 'message' => 'Обязательное поле'],
-            [['date_registration', 'is_moderator'], 'safe'],
+            [['date_registration', 'is_moderator', 'imageFile'], 'safe'],
             [['email'], 'email', 'message' => 'Некорректный email'],
             [['imageFile'], 'file', 'extensions' => 'png, jpg'],
             [['is_moderator'], 'integer'],
