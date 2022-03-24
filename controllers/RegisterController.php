@@ -15,9 +15,9 @@ class RegisterController extends Controller
       if (Yii::$app->request->isPost) {
          $model->load(\Yii::$app->request->post());
          
-         $model->imageFile = UploadedFile::getInstances($model, 'imageFile');
-            echo AppController::debug($model);
-         die;
+         $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+         //   echo AppController::debug($model->imageFile);
+         //die;
          if ($model->validate()) {
          
             $model->upload();
