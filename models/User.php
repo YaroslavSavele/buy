@@ -20,10 +20,35 @@ use yii\web\UploadedFile;
  * @property Comments[] $comments
  * @property Offers[] $offers
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
    public $password_repeat;
    public $imageFile;
+   public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        // TODO: Implement findIdentityByAccessToken() method.
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        // TODO: Implement getAuthKey() method.
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        // TODO: Implement validateAuthKey() method.
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -31,7 +56,10 @@ class User extends \yii\db\ActiveRecord
     {
         return 'users';
     }
-
+    public function validatePassword($password)
+    {
+        return \Yii::$app->security->validatePassword($password, $this->password);
+    }
     /**
      * {@inheritdoc}
      */

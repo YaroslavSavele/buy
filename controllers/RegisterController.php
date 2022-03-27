@@ -23,6 +23,7 @@ class RegisterController extends Controller
             $model->upload();
             $model->password = Yii::$app->security->generatePasswordHash($model->password);
             $model->save(false);
+            return $this->goHome();
          }
       }
       return $this->render('index', ['model' => $model]);

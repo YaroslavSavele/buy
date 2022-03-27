@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\User;
 use app\assets\AppAsset;
 use app\widgets\Alert;
 use yii\bootstrap4\Breadcrumbs;
@@ -49,10 +50,14 @@ AppAsset::register($this);
       <div class="search__icon"></div>
       <div class="search__close-btn"></div>
     </form>
-    <a class="header__avatar avatar" href="#">
-      <img src="/img/avatar.jpg" srcset="/img/avatar@2x.jpg 2x" alt="Аватар пользователя">
+    <?php if ($id = Yii::$app->user->id): ?>
+      <?php $user = User::findOne($id); ?>
+    <a class="header__avatar avatar" href="<?= Url::to('/login/logout') ?>" style="display: block">
+      <img src="/<?= Html::encode($user->avatar); ?>" srcset="/img/avatar@2x.jpg 2x" alt="Аватар пользователя">
     </a>
-    <a class="header__input" href="/register">Вход и регистрация</a>
+    <?php else: ?>
+    <a class="header__input" href="<?= Url::to('/register') ?>">Вход и регистрация</a>
+    <?php endif; ?>
   </div>
 </header>
    
