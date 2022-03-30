@@ -9,6 +9,13 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Auth;
+use app\models\User;
+use app\controllers\AppController;
+use yii\db\Expression;
+use yii\web\NotFoundHttpException;
+
+use yii\authclient\clients\VKontakte;
 
 class SiteController extends Controller
 {
@@ -61,8 +68,7 @@ class SiteController extends Controller
     public function onAuthSuccess($client) 
     {
       $attributes = $client->getUserAttributes();
-          echo AppController::debug($attributes);
-         die;
+         
        /* @var $auth Auth */
        $auth = Auth::find()->where([
          'source' => $client->getId(),
@@ -72,6 +78,7 @@ class SiteController extends Controller
      if (Yii::$app->user->isGuest) {
          if ($auth) { // авторизация
             $user = $auth->user;
+            
             Yii::$app->user->login($user);
          } else {
             $password = Yii::$app->security->generateRandomString(6);
@@ -84,21 +91,24 @@ class SiteController extends Controller
                } else {
                   $user->email = $attributes['id'] . '@buy.com';
                }
-               $user->user_password = $password;
+               $user->password = $password;
                $user->password_repeat = $password;
-               $user->city_id = $attributes['city']['id'];
+               $user->avatar = $attributes['photo'];
             
             if ($user->save()) {
-               $auth = new Auth([
-                   'iser_id' => $user->id,
-                   'source' => $client->getId(),
-                   'sourse_id' => $attributes['id'],
-               ]);
-
-               if ($auth->save()) {
-                  Yii::$app->user->login($user);
-                  $this->redirect('/');
-               }
+         ;
+               $auth = new Auth();
+               $auth->user_id = $user->id;
+               $auth->source = $client->getId();
+               $auth->sourse_id = $attributes['id'];
+               
+               $auth->save();
+          echo AppController::debug($auth);
+         die;
+               //if ()) {
+               //   Yii::$app->user->login($user);
+               //   $this->redirect('/');
+               //}
             }
          }
       }

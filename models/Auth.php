@@ -33,7 +33,7 @@ class Auth extends \yii\db\ActiveRecord
             [['user_id', 'source', 'sourse_id'], 'required'],
             [['user_id'], 'integer'],
             [['source', 'sourse_id'], 'string', 'max' => 255],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
