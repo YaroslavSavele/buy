@@ -101,19 +101,16 @@ class SiteController extends Controller
                $auth->user_id = $user->id;
                $auth->source = $client->getId();
                $auth->sourse_id = $attributes['id'];
-               
-               $auth->save();
-          echo AppController::debug($auth);
-         die;
-               //if ()) {
-               //   Yii::$app->user->login($user);
-               //   $this->redirect('/');
-               //}
+               if ($auth->save()) {
+                  Yii::$app->user->login($user);
+                  $this->redirect('/');
+               }
             }
          }
       }
    }
-
+//echo AppController::debug($auth);
+//         die;
 
     /**
      * Displays homepage.

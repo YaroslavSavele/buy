@@ -33,7 +33,7 @@ $this->title = 'Вход';
           <span>Обязательное поле</span>
         </div>
         <?= Html::submitButton('Войти', ['class' => 'login__button btn btn--medium js-button']) ?>
-        <a class="btn btn--small btn--flex btn--white" href="#">
+        <a class="btn btn--small btn--flex btn--white" href="<?= Url::to('/site/auth?authclient=vkontakte') ?>">
           Войти через
           <span class="icon icon--vk"></span>
         </a>

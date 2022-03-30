@@ -53,7 +53,7 @@ AppAsset::register($this);
     <?php if ($id = Yii::$app->user->id): ?>
       <?php $user = User::findOne($id); ?>
     <a class="header__avatar avatar" href="<?= Url::to('/login/logout') ?>" style="display: block">
-      <img src="/<?= Html::encode($user->avatar); ?>" srcset="/img/avatar@2x.jpg 2x" alt="Аватар пользователя">
+      <img src="<?= Html::encode($user->avatar); ?>" srcset="/img/avatar@2x.jpg 2x" alt="Аватар пользователя">
     </a>
     <?php else: ?>
     <a class="header__input" href="<?= Url::to('/register') ?>">Вход и регистрация</a>

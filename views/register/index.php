@@ -2,6 +2,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\authclient\widgets\AuthChoice;
 
 
 
@@ -56,14 +57,10 @@ $this->title = 'Регистрация';
           <span>Пароли не совпадают</span>
         </div>
         <?= Html::submitButton('Создать аккаунт', ['class' => 'sign-up__button btn btn--medium js-button']) ?>
-        <a class="btn btn--small btn--flex btn--white" href="<?= Url::to('site/auth') ?>">
+        <a class="btn btn--small btn--flex btn--white" href="<?= Url::to('/site/auth?authclient=vkontakte') ?>">
           Войти через
           <span class="icon icon--vk"></span>
         </a>
-        <?= yii\authclient\widgets\AuthChoice::widget([
-     'baseAuthUrl' => ['site/auth'],
-     'popupMode' => false,
-]) ?>
       <?php ActiveForm::end() ?>
     </section>
   </main>
