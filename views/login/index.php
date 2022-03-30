@@ -21,7 +21,7 @@ $this->title = 'Вход';
                ],
       ]); ?>
       <div class="login__title">
-          <a class="login__link" href="sign-up.html">Регистрация</a>
+          <a class="login__link" href="<?= Url::to('/register') ?>">Регистрация</a>
           <h2>Вход</h2>
         </div>
         <div class="form__field login__field">
