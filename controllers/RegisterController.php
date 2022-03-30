@@ -14,11 +14,16 @@ class RegisterController extends Controller
       $model = new User;
       if (Yii::$app->request->isPost) {
          $model->load(\Yii::$app->request->post());
-         $model->avatar = UploadedFile::getInstances($model, 'files');
+         
+         $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+         //   echo AppController::debug($model->imageFile);
+         //die;
          if ($model->validate()) {
+         
             $model->upload();
             $model->password = Yii::$app->security->generatePasswordHash($model->password);
             $model->save(false);
+            return $this->goHome();
          }
       }
       return $this->render('index', ['model' => $model]);

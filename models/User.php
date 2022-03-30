@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\UploadedFile;
 /**
  * This is the model class for table "users".
  *
@@ -19,10 +20,35 @@ use yii\web\IdentityInterface;
  * @property Comments[] $comments
  * @property Offers[] $offers
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
    public $password_repeat;
    public $imageFile;
+   public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        // TODO: Implement findIdentityByAccessToken() method.
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        // TODO: Implement getAuthKey() method.
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        // TODO: Implement validateAuthKey() method.
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -30,7 +56,10 @@ class User extends \yii\db\ActiveRecord
     {
         return 'users';
     }
-
+    public function validatePassword($password)
+    {
+        return \Yii::$app->security->validatePassword($password, $this->password);
+    }
     /**
      * {@inheritdoc}
      */
@@ -38,7 +67,7 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'email', 'password', 'password_repeat'], 'required', 'message' => 'Обязательное поле'],
-            [['date_registration', 'is_moderator'], 'safe'],
+            [['date_registration', 'is_moderator', 'imageFile'], 'safe'],
             [['email'], 'email', 'message' => 'Некорректный email'],
             [['imageFile'], 'file', 'extensions' => 'png, jpg'],
             [['is_moderator'], 'integer'],
