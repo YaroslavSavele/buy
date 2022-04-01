@@ -12,13 +12,13 @@ class m220331_165755_insert_data_to_categories_table extends Migration
      */
     public function safeUp()
     {
-      $this->batchInsert('name', [
-         "Дом",
-         "Авто",
-         "Спорт и отдых", 
-         "Электроника", 
-         "Одежда", 
-         "Книги"
+      $this->batchInsert('categories', ['name'], [
+         ["Дом"],
+         ["Авто"],
+         ["Спорт и отдых"], 
+         ["Электроника"], 
+         ["Одежда"], 
+         ["Книги"]
       ]);
     }
 
