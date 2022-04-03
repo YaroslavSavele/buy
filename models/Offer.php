@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Category;
 
 /**
  * This is the model class for table "offers".
@@ -23,6 +24,7 @@ use Yii;
  */
 class Offer extends \yii\db\ActiveRecord
 {
+   public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -37,14 +39,16 @@ class Offer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'price', 'type', 'description', 'user_id', 'category_id'], 'required'],
+            [['title', 'price', 'type', 'description', 'category_id'], 'required', 'message' => 'Обязательное поле'],
             [['price', 'type', 'user_id', 'category_id'], 'integer'],
-            [['description'], 'string'],
-            [['created_at'], 'safe'],
-            [['title'], 'string', 'max' => 128],
+            [['price'], 'number', 'min' => 100, 'tooSmall' => 'Не менее {min} рублей'],
+            [['description'], 'string', 'min' => 50, 'max' => 1000, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
+            [['created_at', 'img', 'title', 'price', 'type', 'description', 'user_id', 'category_id'], 'safe'],
+            [['title'], 'string', 'min' => 10, 'max' => 100, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
+            [['imageFile'], 'file', 'extensions' => 'png, jpg'],
             [['img'], 'string', 'max' => 255],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -55,11 +59,11 @@ class Offer extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
+            'title' => 'Название',
             'img' => 'Img',
             'price' => 'Price',
             'type' => 'Type',
-            'description' => 'Description',
+            'description' => 'Описание',
             'created_at' => 'Created At',
             'user_id' => 'User ID',
             'category_id' => 'Category ID',
@@ -94,5 +98,13 @@ class Offer extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function upload()
+    {
+        if ($this->imageFile) {
+            $this->img ='uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+         }
     }
 }
