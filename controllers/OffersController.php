@@ -31,9 +31,18 @@ class OffersController extends Controller
       
       $categories = Category::find()->all();
 
-      return $this->render('add',[
+      return $this->render('add', [
          'model' => $model,
          'categories' => $categories,
       ]);
+   }
+
+   public function actionMy()
+   {
+       $query = Offer::find();
+       $query->andWhere(['user_id' => Yii::$app->user->id]);
+       $query->orderBy(['created_at' => SORT_DESC]);
+       $tickets = $query->all();
+       return $this->render('my', ['tickets' => $tickets]);
    }
 }

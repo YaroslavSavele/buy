@@ -12,6 +12,7 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
 
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -35,10 +36,11 @@ AppAsset::register($this);
     <a class="header__logo logo" href="<?= Url::to('/') ?>">
       <img src="/img/logo.svg" width="179" height="34" alt="Логотип Куплю Продам">
     </a>
-    <nav class="header__user-menu">
+    
+    <nav class="header__user-menu" <?php if (Yii::$app->user->identity): ?>style="display: block"<?php endif; ?>>
       <ul class="header__list">
         <li class="header__item">
-          <a href="my-tickets.html">Публикации</a>
+          <a href="<?= Url::to('offers/my') ?>">Публикации</a>
         </li>
         <li class="header__item">
           <a href="comments.html">Комментарии</a>
@@ -46,10 +48,11 @@ AppAsset::register($this);
       </ul>
     </nav>
     <form class="search" method="get" action="#" autocomplete="off">
-      <input type="search" name="query" placeholder="Поиск" aria-label="Поиск">
+      <input type="search" name="query" placeholder="Поиск" aria-label="Поиск" <?php if (Yii::$app->user->identity): ?>style="width: 256px"<?php endif; ?>>
       <div class="search__icon"></div>
       <div class="search__close-btn"></div>
     </form>
+    
     <?php if ($id = Yii::$app->user->id): ?>
       <?php $user = User::findOne($id); ?>
     <a class="header__avatar avatar" href="<?= Url::to('/login/logout') ?>" style="display: block">
