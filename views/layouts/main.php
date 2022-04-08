@@ -40,7 +40,7 @@ AppAsset::register($this);
     <nav class="header__user-menu" <?php if (Yii::$app->user->identity): ?>style="display: block"<?php endif; ?>>
       <ul class="header__list">
         <li class="header__item">
-          <a href="<?= Url::to('offers/my') ?>">Публикации</a>
+          <a href="<?= Url::to('/offers/my') ?>">Публикации</a>
         </li>
         <li class="header__item">
           <a href="comments.html">Комментарии</a>

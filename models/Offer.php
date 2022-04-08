@@ -70,6 +70,14 @@ class Offer extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getType()
+    {
+        if ($this->type === 0) {
+            return 'КУПЛЮ';
+        } elseif ($this->type === 2) {
+            return 'ПРОДАМ';
+        }
+    }
     /**
      * Gets query for [[Category]].
      *
