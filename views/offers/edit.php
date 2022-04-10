@@ -22,8 +22,10 @@ $this->title = 'Редактировать публикацию';
                 'inputOptions' => ['class' => 'js-field'],
                ],
       ]); ?>
-         <div class="ticket-form__avatar-container js-preview-container">
-            <div class="ticket-form__avatar js-preview"></div>
+         <div class="ticket-form__avatar-container js-preview-container uploaded">
+         <div class="ticket-form__avatar js-preview">
+               <img src="/<?= $model->img?>" alt="">
+            </div>
             <div class="ticket-form__field-avatar">
               <?= $form->field($model, 'imageFile')->fileInput($options = [
                'class' => "visually-hidden js-file-field",

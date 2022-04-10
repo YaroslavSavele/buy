@@ -40,21 +40,43 @@ class OffersController extends Controller
     
     public function actionEdit($id)
     {
-        $model = Offer::find()
-        ->where(['id' => $id])
-        ->one();
+        $model = Offer::findOne($id);
         if(!$model) {
             throw new NotFoundHttpException("Объявление не найдено!");
         }
 
         $categories = Category::find()->all();
 
-        return $this->render('edit', [
+        if (Yii::$app->request->isPost) {
+         $model->load(\Yii::$app->request->post());
+         
+         $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+         
+         if ($model->validate()) {
+            $model->upload();
+            $model->imageFile = '';
+            if ($model->update()) {
+            return $this->redirect('/offers/my');
+        }
+         }
+      }
+        
+      return $this->render('edit', [
             'model'=>$model,
             'categories' => $categories,
         ]);
     }
     
+    public function actionDelete($id)
+    {
+        $offer = Offer::findOne($id);
+        if(!$offer) {
+            throw new NotFoundHttpException("Объявление не найдено!");
+        }
+        $offer->delete();
+        return $this->redirect('/offers/my');
+    }
+
    public function actionMy()
    {
        $query = Offer::find();

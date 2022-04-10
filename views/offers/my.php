@@ -33,7 +33,7 @@ $this->title = 'Мои публикации';
                      <p class="ticket-card__price"><span class="js-sum"><?= Html::encode($offer->price) ?></span> ₽</p>
                   </div>
                   </div>
-                  <button class="ticket-card__del js-delete" type="button">Удалить</button>
+                  <a class="ticket-card__del js-delete" href="<?= Url::to(['/offers/delete', 'id' => $offer->id]) ?>" type="button">Удалить</a>
                </div>
             </li>
          <?php endforeach; ?>
