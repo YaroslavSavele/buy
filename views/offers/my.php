@@ -17,11 +17,11 @@ $this->title = 'Мои публикации';
       </div>
       <ul>
       <?php if (count($offers) > 0): ?>
-         <?php foreach ($offers as $offer): ?>
+        <?php foreach ($offers as $offer): ?>
             <li class="tickets-list__item js-card">
                <div class="ticket-card ticket-card--color06">
                   <div class="ticket-card__img">
-                  <img src="/<?= Html::encode($offer->img) ?>" srcset="img/item06@2x.jpg 2x" alt="Изображение товара">
+                  <img src="/<?= Html::encode($offer->img) ?>" srcset="img/item06@2x.jpg 2x" alt="Изображение товара отсутствует">
                   </div>
                   <div class="ticket-card__info">
                   <span class="ticket-card__label"><?= $offer->getType(); ?></span>
@@ -36,8 +36,8 @@ $this->title = 'Мои публикации';
                   <a class="ticket-card__del js-delete" href="<?= Url::to(['/offers/delete', 'id' => $offer->id]) ?>" type="button">Удалить</a>
                </div>
             </li>
-         <?php endforeach; ?>
-        <?php endif; ?>
+        <?php endforeach; ?>
+      <?php endif; ?>
       </ul>
     </div>
   </section>

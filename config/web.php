@@ -7,6 +7,8 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'sourceLanguage' => 'ru-RU',
+    'timeZone' => 'Europe/Moscow',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -49,6 +51,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'offers/edit/:<id:\d+>' => 'offers/edit',
             ],
         ],
         'authClientCollection' => [
@@ -61,7 +64,10 @@ $config = [
             ],
          ],
      ],
-       
+       'formatter' => [
+            'defaultTimeZone' => 'Europe/Moscow', // задать часовой пояс
+            'locale' => 'ru-RU'
+        ],
     ],
     'params' => $params,
 ];

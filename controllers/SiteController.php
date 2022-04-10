@@ -14,6 +14,7 @@ use app\models\User;
 use app\controllers\AppController;
 use yii\db\Expression;
 use yii\web\NotFoundHttpException;
+use app\models\Offer;
 
 use yii\authclient\clients\VKontakte;
 
@@ -119,7 +120,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Offer::find();
+        $query->orderBy(['created_at' => SORT_DESC])->limit(8);
+        $offers = $query->all();
+        return $this->render('index', ['offers' => $offers]);
     }
 
    

@@ -85,4 +85,14 @@ class OffersController extends Controller
        $offers = $query->all();
        return $this->render('my', ['offers' => $offers]);
    }
+
+   public function actionView($id)
+   {
+       $offer = Offer::findOne($id);
+        if(!$offer) {
+            throw new NotFoundHttpException("Объявление не найдено!");
+        }
+
+        return $this->render('view', ['offer' => $offer]);
+   }
 }
