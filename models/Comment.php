@@ -32,12 +32,9 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['text'], 'string'],
-            [['created_at'], 'safe'],
-            [['user_id', 'offer_id'], 'required'],
-            [['user_id', 'offer_id'], 'integer'],
-            [['offer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Offers::className(), 'targetAttribute' => ['offer_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            ['text', 'required', 'message' => 'Обязательное поле'],
+            [['text'], 'string', 'min' => 20, 'max' => 1000, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
+            
         ];
     }
 

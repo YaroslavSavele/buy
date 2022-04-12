@@ -52,6 +52,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'offers/edit/:<id:\d+>' => 'offers/edit',
+                'offers/view/:<id:\d+>' => 'offers/view',
             ],
         ],
         'authClientCollection' => [

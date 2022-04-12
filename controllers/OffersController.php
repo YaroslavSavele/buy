@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use app\models\Category;
 use app\models\Offer;
+use app\models\Comment;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 
@@ -93,6 +94,26 @@ class OffersController extends Controller
             throw new NotFoundHttpException("Объявление не найдено!");
         }
 
-        return $this->render('view', ['offer' => $offer]);
+        $comment = new Comment();
+        if(Yii::$app->request->isPost) {
+            $comment->load(Yii::$app->request->post());
+            if ($comment->validate()) {
+                $comment->offer_id = $id;
+                $comment->user_id = Yii::$app->user->id;
+                $comment->save();
+                return $this->redirect('/offers/view/:'.$id);
+            }
+        }
+
+        $query = Comment::find();
+        $query->andWhere(['offer_id' => $id]);
+        $query->orderBy(['created_at' => SORT_DESC]);
+        $reviews = $query->all();
+
+        return $this->render('view', [
+            'offer' => $offer,
+            'comment' =>$comment,
+            'reviews' =>$reviews,
+        ]);
    }
 }
