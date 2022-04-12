@@ -118,7 +118,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function upload()
     {
         if ($this->imageFile) {
-            $this->avatar ='uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $this->avatar ='/uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
          }
     }
