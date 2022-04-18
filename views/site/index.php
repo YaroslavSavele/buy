@@ -84,7 +84,7 @@ $this->title = 'Куплю Продам';
                 <p class="ticket-card__price"><span class="js-sum"><?= Html::encode($offer->price) ?></span> ₽</p>
               </div>
               <div class="ticket-card__desc">
-                <p>Куплю монстеру зеленую в хорошем зеленом состоянии, буду поливать...</p>
+                <p><?= Html::encode(substr($offer->description, 0, 155)) ?></p>
               </div>
             </div>
           </div>
