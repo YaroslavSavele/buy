@@ -78,18 +78,18 @@ class OffersController extends Controller
         return $this->redirect('/offers/my');
     }
 
-   public function actionMy()
-   {
-       $query = Offer::find();
-       $query->andWhere(['user_id' => Yii::$app->user->id]);
-       $query->orderBy(['created_at' => SORT_DESC]);
-       $offers = $query->all();
-       return $this->render('my', ['offers' => $offers]);
-   }
+    public function actionMy()
+    {
+        $query = Offer::find();
+        $query->andWhere(['user_id' => Yii::$app->user->id]);
+        $query->orderBy(['created_at' => SORT_DESC]);
+        $offers = $query->all();
+        return $this->render('my', ['offers' => $offers]);
+    }
 
-   public function actionView($id)
-   {
-       $offer = Offer::findOne($id);
+    public function actionView($id)
+    {
+        $offer = Offer::findOne($id);
         if(!$offer) {
             throw new NotFoundHttpException("Объявление не найдено!");
         }
@@ -100,7 +100,10 @@ class OffersController extends Controller
             if ($comment->validate()) {
                 $comment->offer_id = $id;
                 $comment->user_id = Yii::$app->user->id;
-                $comment->save();
+                if ($comment->save()) {
+                    $offer->updateCounters(['number_comments' => 1]);
+                }
+                
                 return $this->redirect('/offers/view/:'.$id);
             }
         }
@@ -112,8 +115,24 @@ class OffersController extends Controller
 
         return $this->render('view', [
             'offer' => $offer,
-            'comment' =>$comment,
-            'reviews' =>$reviews,
+            'comment' => $comment,
+            'reviews' => $reviews,
         ]);
-   }
+    }
+
+    public function actionComments() 
+    {
+        $id = Yii::$app->user->id;
+        $offers = Offer::findAll([
+            'user_id' => $id,
+            'number_comments' => !0,
+        ]);
+        
+        //echo AppController::debug($offers);
+        //die;
+
+        return $this->render('comments', [
+            'offers' => $offers,
+        ]);
+    }
 }

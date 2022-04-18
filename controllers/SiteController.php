@@ -133,8 +133,8 @@ class SiteController extends Controller
         ->all();
         // TODO добавить в таблиццу offers колонку кол-во комментариев чтобы решить проблему показа популярных объвлений
         // TODO $post->updateCounters(['view_count' => 1]);
-        echo AppController::debug($populares);
-        die;
+        //echo AppController::debug($populares);
+        //die;
         return $this->render('index', [
             'offers' => $offers,
             'populares' => $populares

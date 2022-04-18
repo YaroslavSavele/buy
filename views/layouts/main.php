@@ -43,7 +43,7 @@ AppAsset::register($this);
           <a href="<?= Url::to('/offers/my') ?>">Публикации</a>
         </li>
         <li class="header__item">
-          <a href="comments.html">Комментарии</a>
+          <a href="<?= Url::to('/offers/comments') ?>">Комментарии</a>
         </li>
       </ul>
     </nav>
