@@ -27,13 +27,8 @@ $this->title = 'Комментарии к моим публикациям';
           </a>
         </div>
         <ul class="comments-list">
-        <?php 
-            $comments = Comment::find()
-            ->where(['offer_id' => $offer->id])
-            ->orderBy(['created_at' => SORT_DESC])
-            ->all();
-        ?>
-          <?php foreach ($comments as $comment): ?>      
+        <?php $comments = $offer->comments; ?>
+          <?php foreach ($comments as $comment): ?>
           <li class="js-card">
             <div class="comment-card">
               <div class="comment-card__header">
@@ -45,7 +40,7 @@ $this->title = 'Комментарии к моим публикациям';
               <div class="comment-card__content">
                 <p><?= Html::encode($comment->text) ?></p>
               </div>
-              <button class="comment-card__delete js-delete" type="button">Удалить</button>
+              <a class="comment-card__delete js-delete" href="<?= Url::to(['/offers/delete-comment', 'id' => $comment->id]) ?>" type="button">Удалить</a>
             </div>
           </li>
           <?php endforeach; ?>

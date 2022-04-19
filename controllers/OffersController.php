@@ -123,10 +123,13 @@ class OffersController extends Controller
     public function actionComments() 
     {
         $id = Yii::$app->user->id;
-        $offers = Offer::findAll([
-            'user_id' => $id,
-            'number_comments' => !0,
-        ]);
+        $offers = Offer::find()
+        ->where(['user_id' => $id])
+        ->andWhere(['>', 'number_comments', 0])
+        ->with('comments')
+        ->all();
+        
+        //$offers->where(['=', 'type', 2])->all();
         
         //echo AppController::debug($offers);
         //die;
@@ -134,5 +137,19 @@ class OffersController extends Controller
         return $this->render('comments', [
             'offers' => $offers,
         ]);
+    }
+
+    public function actionDeleteComment($id)
+    {
+        $comment = Comment::findOne($id);
+        if(!$comment) {
+            throw new NotFoundHttpException("Комментария не найдено!");
+        }
+        $offer = Offer::findOne($comment->offer_id);
+        //$comment->delete();
+        if ($comment->delete()) {
+                    $offer->updateCounters(['number_comments' => -1]);
+                }
+        return $this->redirect('/offers/comments');
     }
 }

@@ -17,6 +17,7 @@ use yii\web\NotFoundHttpException;
 use app\models\Offer;
 use app\models\Comment;
 use yii\db\Query;
+use app\models\Category;
 
 use yii\authclient\clients\VKontakte;
 
@@ -127,17 +128,20 @@ class SiteController extends Controller
         $offers = $query->all();
 
         $populares = Offer::find()
-        ->joinWith('comments', 'comments.offer_id = offers.id')
-        //->orderBy(['count(comments)' => SORT_ASC])
+        ->andWhere(['>', 'number_comments', 0])
+        ->orderBy(['number_comments' => SORT_DESC])
         ->limit(8)
         ->all();
-        // TODO добавить в таблиццу offers колонку кол-во комментариев чтобы решить проблему показа популярных объвлений
-        // TODO $post->updateCounters(['view_count' => 1]);
         //echo AppController::debug($populares);
         //die;
+        $categories = Category::find()
+        ->with('offers')
+        ->all();
+
         return $this->render('index', [
             'offers' => $offers,
-            'populares' => $populares
+            'populares' => $populares,
+            'categories' => $categories
         ]);
     }
 
