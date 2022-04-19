@@ -132,12 +132,11 @@ class SiteController extends Controller
         ->orderBy(['number_comments' => SORT_DESC])
         ->limit(8)
         ->all();
-        //echo AppController::debug($populares);
-        //die;
+        
         $categories = Category::find()
         ->with('offers')
         ->all();
-
+        
         return $this->render('index', [
             'offers' => $offers,
             'populares' => $populares,
