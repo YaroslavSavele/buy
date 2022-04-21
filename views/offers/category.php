@@ -1,6 +1,7 @@
 <?php
 use yii\bootstrap4\Html;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 /** @var yii\web\View $this */
 
@@ -30,7 +31,7 @@ $this->title = 'Куплю Продам';
     <h2 class="visually-hidden">Предложения из категории <?= $categoryName; ?></h2>
     <div class="tickets-list__wrapper">
       <div class="tickets-list__header">
-        <p class="tickets-list__title"><?= $categoryName; ?> <b class="js-qty"><? echo(count($offers)); ?></b></p>
+        <p class="tickets-list__title"><?= $categoryName; ?> <b class="js-qty"><? echo($totalCount); ?></b></p>
       </div>
       <ul>
         
@@ -60,6 +61,18 @@ $this->title = 'Куплю Продам';
         
       </ul>
     </div>
+    <div class="tickets-list__pagination">
+        <ul class="pagination">
+          <?php echo LinkPager::widget([
+                        'pagination' => $pages,
+                        'prevPageLabel' => false,
+                        'nextPageLabel' => 'дальше',
+                        'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'active'],
+                        'disableCurrentPageButton' => true
+                    ]);
+           ?> 
+        </ul>
+      </div>
   </section>
  
 </main>
