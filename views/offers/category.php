@@ -26,13 +26,14 @@ $this->title = 'Куплю Продам';
     </ul>
   </section>
   <section class="tickets-list">
-    <h2 class="visually-hidden">Самые новые предложения</h2>
+    <?php if (count($offers) > 0): ?>
+    <h2 class="visually-hidden">Предложения из категории <?= $categoryName; ?></h2>
     <div class="tickets-list__wrapper">
       <div class="tickets-list__header">
-        <p class="tickets-list__title">Самое свежее</p>
+        <p class="tickets-list__title"><?= $categoryName; ?> <b class="js-qty"><? echo(count($offers)); ?></b></p>
       </div>
       <ul>
-        <?php if (count($offers) > 0): ?>
+        
         <?php foreach ($offers as $offer): ?>  
         <li class="tickets-list__item">
           <div class="ticket-card ticket-card--color06">
@@ -42,7 +43,7 @@ $this->title = 'Куплю Продам';
             <div class="ticket-card__info">
               <span class="ticket-card__label"><?= $offer->getType(); ?></span>
               <div class="ticket-card__categories">
-                <a href="<?= Url::to(['/offers/category', 'id' => $offer->category->id]) ?>"><?= Html::encode($offer->category->name) ?></a>
+                <a href="#"><?= Html::encode($offer->category->name) ?></a>
               </div>
               <div class="ticket-card__header">
                 <h3 class="ticket-card__title"><a href="<?= Url::to(['/offers/view', 'id' => $offer->id]) ?>"><?= Html::encode($offer->title) ?></a></h3>
@@ -55,44 +56,11 @@ $this->title = 'Куплю Продам';
           </div>
         </li>
         <?php endforeach; ?>
-        <?php endif; ?>
+    <?php endif; ?>
         
       </ul>
     </div>
   </section>
-  <section class="tickets-list">
-    <h2 class="visually-hidden">Самые обсуждаемые предложения</h2>
-    <div class="tickets-list__wrapper">
-      <div class="tickets-list__header">
-        <p class="tickets-list__title">Самые обсуждаемые</p>
-      </div>
-      <ul>
-        <?php if (count($populares) > 0): ?>
-        <?php foreach ($populares as $offer): ?>  
-        <li class="tickets-list__item">
-          <div class="ticket-card ticket-card--color06">
-            <div class="ticket-card__img">
-              <img src="/<?= Html::encode($offer->img) ?>" srcset="img/item01@2x.jpg 2x" alt="Изображение товара отсутствует">
-            </div>
-            <div class="ticket-card__info">
-              <span class="ticket-card__label"><?= $offer->getType(); ?></span>
-              <div class="ticket-card__categories">
-                <a href="<?= Url::to(['/offers/category', 'id' => $offer->category->id]) ?>"><?= Html::encode($offer->category->name) ?></a>
-              </div>
-              <div class="ticket-card__header">
-                <h3 class="ticket-card__title"><a href="<?= Url::to(['/offers/view', 'id' => $offer->id]) ?>"><?= Html::encode($offer->title) ?></a></h3>
-                <p class="ticket-card__price"><span class="js-sum"><?= Html::encode($offer->price) ?></span> ₽</p>
-              </div>
-              <div class="ticket-card__desc">
-                <p><?= Html::encode(substr($offer->description, 0, 155)) ?></p>
-              </div>
-            </div>
-          </div>
-        </li>
-        <?php endforeach; ?>
-        <?php endif; ?>
-      </ul>
-    </div>
-  </section>
+ 
 </main>
 

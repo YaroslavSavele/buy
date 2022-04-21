@@ -9,6 +9,7 @@ use app\models\Offer;
 use app\models\Comment;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
+use yii\data\ActiveDataProvider;
 
 class OffersController extends Controller 
 {
@@ -151,5 +152,38 @@ class OffersController extends Controller
                     $offer->updateCounters(['number_comments' => -1]);
                 }
         return $this->redirect('/offers/comments');
+    }
+
+    public function actionCategory($id)
+    {
+        $query = Offer::find()->where(['category_id' => $id]);
+
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 8,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC,
+                ]
+            ],
+        ]);
+
+        $offers = $provider->getModels();
+
+         $categories = Category::find()
+        ->with('offers')
+        ->all();
+
+        $category = Category::findOne($id);
+        $categoryName = $category->name;
+        //echo AppController::debug($categoryName);
+        //die;
+        return $this->render('category', [
+            'offers' => $offers,
+            'categories' => $categories,
+            'categoryName' => $categoryName
+        ]);
     }
 }
