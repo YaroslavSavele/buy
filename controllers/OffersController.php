@@ -159,7 +159,12 @@ class OffersController extends Controller
     {
         $query = Offer::find()->where(['category_id' => $id])->orderBy(['created_at' => SORT_DESC]);
         $totalCount = $query->count();
-        $pages = new Pagination(['totalCount' => $totalCount, 'pageSize' => 8]);
+        $pages = new Pagination([
+            'totalCount' => $totalCount,
+            'pageSize' => 8,
+            'pageSizeParam' => false,
+            'forcePageParam' => false,
+            ]);
         
         $offers = $query->offset($pages->offset)
         ->limit($pages->limit)

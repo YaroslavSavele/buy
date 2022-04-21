@@ -53,6 +53,8 @@ $config = [
             'rules' => [
                 'offers/edit/:<id:\d+>' => 'offers/edit',
                 'offers/view/:<id:\d+>' => 'offers/view',
+                //'offers/category/page/:\d+>' => 'offers/category',
+                'offers/category/:<id:\d+>' => 'offers/category',
             ],
         ],
         'authClientCollection' => [
