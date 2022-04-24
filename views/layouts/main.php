@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use app\models\User;
+use app\models\SearchForm;
 use app\assets\AppAsset;
 use app\widgets\Alert;
 use yii\bootstrap4\Breadcrumbs;
@@ -11,7 +12,7 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
-
+use yii\widgets\ActiveForm;
 
 AppAsset::register($this);
 ?>
@@ -47,12 +48,31 @@ AppAsset::register($this);
         </li>
       </ul>
     </nav>
-    <form class="search" method="get" action="#" autocomplete="off">
-      <input type="search" name="query" placeholder="Поиск" aria-label="Поиск" <?php if (Yii::$app->user->identity): ?>style="width: 256px"<?php endif; ?>>
-      <div class="search__icon"></div>
-      <div class="search__close-btn"></div>
-    </form>
-    
+
+    <?php $model = new SearchForm; 
+          if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+          }  
+    ?>
+    <?php $form = ActiveForm::begin([
+            'id' => 'search',
+            'method' => 'post',
+            'action' => '/search',
+            'options' => ['class' => 'search',
+                          'autocomplete' => 'off',
+            ],
+      ]); ?>    
+      
+      <?php if (Yii::$app->user->identity): ?>
+      <?= $form->field($model, 'search', ['options' => ['tag' => false]])->input('search', ['placeholder' => 'Поиск', 'style' => 'width: 256px', ])->label(false); ?>
+      <?php else: ?>
+      <?= $form->field($model, 'search', ['options' => ['tag' => false]])->input('search', ['placeholder' => 'Поиск'])->label(false); ?>  
+      <?php endif; ?>
+      <a href="<?= Url::to('/search') ?>"><div class="search__icon"></div></a>
+      <!--<div class="search__close-btn"></div>-->
+      <!--<?= Html::submitButton('Найти', ['class' => 'form__button btn btn--medium js-button']) ?>-->
+    <?php ActiveForm::end() ?>
+
     <?php if ($id = Yii::$app->user->id): ?>
       <?php $user = User::findOne($id); ?>
     <a class="header__avatar avatar" href="<?= Url::to('/login/logout') ?>" style="display: block">

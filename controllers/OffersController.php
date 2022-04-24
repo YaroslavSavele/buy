@@ -184,7 +184,8 @@ class OffersController extends Controller
             'categories' => $categories,
             'categoryName' => $categoryName,
             'totalCount' => $totalCount,
-            'pages' => $pages
+            'pages' => $pages,
+            'id'=> $id
         ]);
     }
 }

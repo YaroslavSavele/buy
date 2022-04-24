@@ -15,7 +15,8 @@ $this->title = 'Куплю Продам';
       <?php $adverts = $category->offers; ?>
       <?php if (count($adverts) > 0): ?>      
       <li class="categories-list__item">
-        <a href="<?= Url::to(['/offers/category', 'id' => $category->id]) ?>" class="category-tile category-tile--default">
+        <a href="<?= Url::to(['/offers/category', 'id' => $category->id]) ?>" class="category-tile
+            <?php if ($category->id == $id): ?> category-tile--active<?php endif;?>">
           <span class="category-tile__image">
             <img src="/<?= $adverts[0]->img; ?>" srcset="/img/cat@2x.jpg 2x" alt="Иконка категории">
           </span>
@@ -67,7 +68,7 @@ $this->title = 'Куплю Продам';
                         'pagination' => $pages,
                         'prevPageLabel' => false,
                         'nextPageLabel' => 'дальше',
-                        'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'active'],
+                        //'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'active'],
                         'disableCurrentPageButton' => true
                     ]);
            ?> 
