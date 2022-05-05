@@ -95,6 +95,10 @@ class OffersController extends Controller
         if(!$offer) {
             throw new NotFoundHttpException("Объявление не найдено!");
         }
+        $idCategory = $offer->category_id;
+        $offersCategory = Offer::find()
+        ->where(['category_id' => $idCategory])
+        ->all();
 
         $comment = new Comment();
         if(Yii::$app->request->isPost) {
@@ -119,6 +123,7 @@ class OffersController extends Controller
             'offer' => $offer,
             'comment' => $comment,
             'reviews' => $reviews,
+            'offersCategory' => $offersCategory,
         ]);
     }
 
