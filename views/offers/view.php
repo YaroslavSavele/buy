@@ -46,7 +46,6 @@ $this->title = 'Публикация';
               <a href="#" class="category-tile category-tile--small">
                 <span class="category-tile__image">
                   <img src="/<?= Html::encode($offersCategory[0]->img) ?>" srcset="img/cat@2x.jpg 2x" alt="Иконка категории">
-                <!--TODO Рисунок категории-->
                 </span>
                 <span class="category-tile__label"><?= Html::encode($offer->category->name) ?></span>
               </a>

@@ -7,6 +7,7 @@ use yii\web\Controller;
 use app\models\Category;
 use app\models\Offer;
 use app\models\Comment;
+use app\models\Chat;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
@@ -24,8 +25,7 @@ class OffersController extends Controller
          $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
          
          if ($model->validate()) {
-         //echo AppController::debug($model);
-         //die;
+         
             $model->upload();
             $model->user_id = Yii::$app->user->getId();
             $model->save(false);
@@ -118,6 +118,10 @@ class OffersController extends Controller
         $query->andWhere(['offer_id' => $id]);
         $query->orderBy(['created_at' => SORT_DESC]);
         $reviews = $query->all();
+
+        $chat = new Chat();
+        echo AppController::debug($chat->database);
+         die;
 
         return $this->render('view', [
             'offer' => $offer,
