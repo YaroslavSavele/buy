@@ -2,14 +2,17 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
 use yii\db\ActiveRecord;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
 
-class Chat
+class Chat extends Model
 {
     public $database;
     protected $dbname = 'chat';
+    public $text;
+
     public function __construct(){
         //$acc = ServiceAccount::fromJsonFile(__DIR__ . '/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json');
         $firebase = (new Factory)->withServiceAccount(__DIR__ . '/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json');
@@ -38,5 +41,12 @@ class Chat
         } else {
             return FALSE;
         }
+    }
+
+    public function rules()
+    {
+        return [
+            [['text'], 'string', 'min' => 3, 'max' => 500, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
+        ];
     }
 }

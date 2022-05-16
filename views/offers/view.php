@@ -50,14 +50,6 @@ $this->title = 'Публикация';
                 <span class="category-tile__label"><?= Html::encode($offer->category->name) ?></span>
               </a>
             </li>
-            <!--<li>
-              <a href="#" class="category-tile category-tile--small">
-                <span class="category-tile__image">
-                  <img src="img/cat04.jpg" srcset="img/cat04@2x.jpg 2x" alt="Иконка категории">
-                </span>
-                <span class="category-tile__label">Спорт и отдых</span>
-              </a>
-            </li>-->
           </ul>
         </div>
       </div>
@@ -156,9 +148,21 @@ $this->title = 'Публикация';
       </div>
     </li>
   </ul>
-  <form class="chat__form">
+  <!--<form class="chat__form">-->
+  <?php $form = ActiveForm::begin([
+            'id' => 'chat__form',
+            'method' => 'post',
+            'options' => ['class' => 'chat__form'],
+            'fieldConfig' => [
+                
+                'inputOptions' => ['class' => 'chat__form-message'],
+               ],
+          ]); ?>        
     <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
-    <textarea class="chat__form-message" name="chat-message" id="chat-field" placeholder="Ваше сообщение"></textarea>
-    <button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>
-  </form>
+    <!--<textarea class="chat__form-message" name="chat-message" id="chat-field" placeholder="Ваше сообщение"></textarea>-->
+    <?= $form->field($chat, 'text', ['options' => ['tag' => false]])->textarea(['placeholder' => 'Ваше сообщение'])->label(false); ?>
+    <!--<button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>-->
+    <?= Html::submitButton('', ['class' => 'chat__form-button']) ?>
+  <?php ActiveForm::end() ?>
+<!--</form>-->
 </section>

@@ -120,14 +120,21 @@ class OffersController extends Controller
         $reviews = $query->all();
 
         $chat = new Chat();
-        echo AppController::debug($chat->database);
-         die;
+        if(Yii::$app->request->isPost) {
+            $chat->load(Yii::$app->request->post());
+            if ($chat->validate()) {
+                echo AppController::debug($chat->text);die;
+                 
+            }
+        }
+        
 
         return $this->render('view', [
             'offer' => $offer,
             'comment' => $comment,
             'reviews' => $reviews,
             'offersCategory' => $offersCategory,
+            'chat' => $chat
         ]);
     }
 
