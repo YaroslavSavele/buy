@@ -123,8 +123,13 @@ class OffersController extends Controller
         if(Yii::$app->request->isPost) {
             $chat->load(Yii::$app->request->post());
             if ($chat->validate()) {
-                echo AppController::debug($chat->text);die;
-                 
+                
+                $chat->insert([
+                    'id' => Yii::$app->user->id,
+                    'text' => $chat->text,
+                    'created_at' => date('H:i'),
+                ]); 
+                //echo AppController::debug($chat->get(Yii::$app->user->id));die;
             }
         }
         
