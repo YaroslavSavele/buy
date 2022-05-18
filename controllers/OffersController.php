@@ -95,6 +95,7 @@ class OffersController extends Controller
         if(!$offer) {
             throw new NotFoundHttpException("Объявление не найдено!");
         }
+        $autor_id = $offer->user_id;
         $idCategory = $offer->category_id;
         $offersCategory = Offer::find()
         ->where(['category_id' => $idCategory])
@@ -120,6 +121,9 @@ class OffersController extends Controller
         $reviews = $query->all();
 
         $chat = new Chat();
+        $listMessages = $chat->get($id);
+        echo AppController::debug($listMessages);die;
+        //https://firebase.google.com/docs/database/rest/structure-data
         if(Yii::$app->request->isPost) {
             $chat->load(Yii::$app->request->post());
             if ($chat->validate()) {
@@ -129,8 +133,9 @@ class OffersController extends Controller
                     'text' => $chat->text,
                     'created_at' => date('H:i'),
                     'offer_id' => $id,
+                    'autor_id' => $autor_id,
                 ]); 
-                //echo AppController::debug($chat->get(Yii::$app->user->id));die;
+                
             }
         }
         

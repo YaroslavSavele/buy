@@ -18,13 +18,13 @@ class Chat extends Model
         $firebase = (new Factory)->withServiceAccount(__DIR__ . '/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json')->withDatabaseUri('https://buybase-6aa76-default-rtdb.firebaseio.com');
         $this->database = $firebase->createDatabase();
     }
-    public function get(int $userID = NULL){    
-        if (empty($userID) || !isset($userID)) { return FALSE; }
-        if ($this->database->getReference($this->dbname)->getSnapshot()->hasChild($userID)){
-            return $this->database->getReference($this->dbname)->getChild($userID)->getValue();
-        } else {
-            return FALSE;
-        }
+    public function get($offer_id){    
+        
+        
+            return $this->database->getReference($this->dbname)
+            ->getValue();
+       
+        
     }
     public function insert(array $data) {
         if (empty($data) || !isset($data)) { return FALSE; }
