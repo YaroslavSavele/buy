@@ -33,6 +33,13 @@ class Chat extends Model
         }
         return TRUE;
     }
+    public function write(array $data) {
+        if (empty($data) || !isset($data)) { return FALSE; }
+        
+            $this->database->getReference($this->dbname)->push($data);
+        
+        return TRUE;
+    }
     public function delete(int $userID) {
         if (empty($userID) || !isset($userID)) { return FALSE; }
         if ($this->database->getReference($this->dbname)->getSnapshot()->hasChild($userID)){
