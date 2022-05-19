@@ -21,7 +21,7 @@ class Chat extends Model
     public function get($offer_id){    
         
         
-            return $this->database->getReference($this->dbname)
+            return $this->database->getReference($this->dbname . '/' . $offer_id)
             ->getValue();
        
         
@@ -33,10 +33,10 @@ class Chat extends Model
         }
         return TRUE;
     }
-    public function write(array $data) {
+    public function write(array $data, $offer_id) {
         if (empty($data) || !isset($data)) { return FALSE; }
         
-            $this->database->getReference($this->dbname)->push($data);
+            $this->database->getReference($this->dbname . '/' . $offer_id)->push($data);
         
         return TRUE;
     }

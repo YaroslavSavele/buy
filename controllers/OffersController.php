@@ -122,7 +122,7 @@ class OffersController extends Controller
 
         $chat = new Chat();
         $listMessages = $chat->get($id);
-        echo AppController::debug($listMessages);die;
+        //echo AppController::debug($listMessages);die;
         //https://firebase.google.com/docs/database/rest/structure-data
         if(Yii::$app->request->isPost) {
             $chat->load(Yii::$app->request->post());
@@ -132,9 +132,8 @@ class OffersController extends Controller
                     'user_id' => Yii::$app->user->id,
                     'text' => $chat->text,
                     'created_at' => date('H:i'),
-                    'offer_id' => $id,
                     'autor_id' => $autor_id,
-                ]); 
+                ], $id); 
                 
             }
         }
@@ -145,7 +144,8 @@ class OffersController extends Controller
             'comment' => $comment,
             'reviews' => $reviews,
             'offersCategory' => $offersCategory,
-            'chat' => $chat
+            'chat' => $chat,
+            'listMessages' => $listMessages,
         ]);
     }
 

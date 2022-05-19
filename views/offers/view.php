@@ -43,7 +43,7 @@ $this->title = 'Публикация';
           </div>
           <ul class="ticket__tags">
             <li>
-              <a href="#" class="category-tile category-tile--small">
+              <a href="<?= Url::to(['/offers/category', 'id' => $offer->category->id]) ?>" class="category-tile category-tile--small">
                 <span class="category-tile__image">
                   <img src="/<?= Html::encode($offersCategory[0]->img) ?>" srcset="img/cat@2x.jpg 2x" alt="Иконка категории">
                 </span>
