@@ -126,18 +126,20 @@ $this->title = 'Публикация';
 </main>
 <section class="chat visually-hidden">
   <h2 class="chat__subtitle">Чат с продавцом</h2>
+  <?php if (isset($listMessages)): ?>
   <ul class="chat__conversation">
+    <?php foreach ($listMessages as $message): ?>  
     <li class="chat__message">
       <div class="chat__message-title">
         <span class="chat__message-author">Вы</span>
-        <time class="chat__message-time" datetime="2021-11-18T21:15">21:15</time>
+        <time class="chat__message-time" datetime="2021-11-18T21:15"><?= ArrayHelper::getValue($message, 'created_at') ?></time>
       </div>
       <div class="chat__message-content">
-        <p>Добрый день!</p>
-        <p>Какова ширина кресла? Из какого оно материала?</p>
+        <p><?= ArrayHelper::getValue($message, 'text') ?></p>
       </div>
     </li>
-    <li class="chat__message">
+    <?php endforeach; ?>
+    <!--<li class="chat__message">
       <div class="chat__message-title">
         <span class="chat__message-author">Продавец</span>
         <time class="chat__message-time" datetime="2021-11-18T21:21">21:21</time>
@@ -146,8 +148,9 @@ $this->title = 'Публикация';
         <p>Добрый день!</p>
         <p>Ширина кресла 59 см, это хлопковая ткань. кресло очень удобное, и почти новое, без сколов и прочих дефектов</p>
       </div>
-    </li>
+    </li>-->
   </ul>
+  <?php endif; ?>
   <!--<form class="chat__form">-->
   <?php $form = ActiveForm::begin([
             'id' => 'chat__form',
@@ -160,7 +163,7 @@ $this->title = 'Публикация';
           ]); ?>        
     <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
     <!--<textarea class="chat__form-message" name="chat-message" id="chat-field" placeholder="Ваше сообщение"></textarea>-->
-    <?= $form->field($chat, 'text', ['options' => ['tag' => false]])->textarea(['placeholder' => 'Ваше сообщение'])->label(false); ?>
+    <?= $form->field($chat, 'text', ['options' => ['tag' => false]])->textarea(['placeholder' => 'Ваше сообщение', 'value' => ''])->label(false); ?>
     <!--<button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>-->
     <?= Html::submitButton('', ['class' => 'chat__form-button']) ?>
   <?php ActiveForm::end() ?>

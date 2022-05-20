@@ -18,10 +18,10 @@ class Chat extends Model
         $firebase = (new Factory)->withServiceAccount(__DIR__ . '/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json')->withDatabaseUri('https://buybase-6aa76-default-rtdb.firebaseio.com');
         $this->database = $firebase->createDatabase();
     }
-    public function get($offer_id){    
+    public function get($chat_id){    
         
         
-            return $this->database->getReference($this->dbname . '/' . $offer_id)
+            return $this->database->getReference($this->dbname . '/' . $chat_id)
             ->getValue();
        
         
@@ -33,10 +33,10 @@ class Chat extends Model
         }
         return TRUE;
     }
-    public function write(array $data, $offer_id) {
+    public function write(array $data, $chat_id) {
         if (empty($data) || !isset($data)) { return FALSE; }
         
-            $this->database->getReference($this->dbname . '/' . $offer_id)->push($data);
+            $this->database->getReference($this->dbname . '/' . $chat_id)->push($data);
         
         return TRUE;
     }
@@ -53,7 +53,8 @@ class Chat extends Model
     public function rules()
     {
         return [
-            [['text'], 'string', 'min' => 3, 'max' => 500, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
+            ['text', 'required'],
+            [['text'], 'string', 'min' => 2, 'max' => 500, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
         ];
     }
 }

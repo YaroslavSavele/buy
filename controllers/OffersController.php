@@ -121,7 +121,8 @@ class OffersController extends Controller
         $reviews = $query->all();
 
         $chat = new Chat();
-        $listMessages = $chat->get($id);
+        $chat_id = $id . '-' . Yii::$app->user->id;
+        $listMessages = $chat->get($chat_id);
         //echo AppController::debug($listMessages);die;
         //https://firebase.google.com/docs/database/rest/structure-data
         if(Yii::$app->request->isPost) {
@@ -133,7 +134,7 @@ class OffersController extends Controller
                     'text' => $chat->text,
                     'created_at' => date('H:i'),
                     'autor_id' => $autor_id,
-                ], $id); 
+                ], $chat_id); 
                 
             }
         }
