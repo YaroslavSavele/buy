@@ -76,15 +76,12 @@ $this->title = 'Публикация';
             </div>
             <div class="comment-form__field">
               <div class="form__field">
-                <!--<textarea name="comment" id="comment-field" cols="30" rows="10" class="js-field">Нормальное вообще кресло! А как насч</textarea>
-                <label for="comment-field">Текст комментария</label>-->
-                <?= $form->field($comment, 'text')->textarea()->label('Текст комментария'); ?>
+                <?= $form->field($comment, 'text')->textarea(['value' => ''])->label('Текст комментария'); ?>
                 <span>Обязательное поле</span>
               </div>
             </div>
             <button class="comment-form__button btn btn--white js-button" type="submit" disabled="">Отправить</button>
         <?php ActiveForm::end() ?>  
-        <!--</form>-->
         </div>
         <?php else: ?>
         <div class="ticket__warning">
@@ -139,19 +136,8 @@ $this->title = 'Публикация';
       </div>
     </li>
     <?php endforeach; ?>
-    <!--<li class="chat__message">
-      <div class="chat__message-title">
-        <span class="chat__message-author">Продавец</span>
-        <time class="chat__message-time" datetime="2021-11-18T21:21">21:21</time>
-      </div>
-      <div class="chat__message-content">
-        <p>Добрый день!</p>
-        <p>Ширина кресла 59 см, это хлопковая ткань. кресло очень удобное, и почти новое, без сколов и прочих дефектов</p>
-      </div>
-    </li>-->
   </ul>
   <?php endif; ?>
-  <!--<form class="chat__form">-->
   <?php $form = ActiveForm::begin([
             'id' => 'chat__form',
             'method' => 'post',
@@ -162,10 +148,22 @@ $this->title = 'Публикация';
                ],
           ]); ?>        
     <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
-    <!--<textarea class="chat__form-message" name="chat-message" id="chat-field" placeholder="Ваше сообщение"></textarea>-->
     <?= $form->field($chat, 'text', ['options' => ['tag' => false]])->textarea(['placeholder' => 'Ваше сообщение', 'value' => ''])->label(false); ?>
-    <!--<button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>-->
     <?= Html::submitButton('', ['class' => 'chat__form-button']) ?>
   <?php ActiveForm::end() ?>
-<!--</form>-->
+  <?php if ($offer->user_id == Yii::$app->user->id): ?>
+  <?php $form = ActiveForm::begin([
+            'id' => 'chat-id__form',
+            'method' => 'post',
+            'options' => ['class' => 'chat__form'],
+            'fieldConfig' => [
+                
+                'inputOptions' => ['class' => 'chat__form-message'],
+               ],
+          ]); ?>        
+    <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
+    <?= $form->field($chat_key, 'key', ['options' => ['tag' => false]])->textInput(['placeholder' => 'Введите ключ чата'])->label(false); ?>
+    <?= Html::submitButton('', ['class' => 'chat__form-button']) ?>
+  <?php ActiveForm::end() ?>
+  <?php endif; ?>
 </section>

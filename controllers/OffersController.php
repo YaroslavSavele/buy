@@ -8,6 +8,8 @@ use app\models\Category;
 use app\models\Offer;
 use app\models\Comment;
 use app\models\Chat;
+use app\models\ChatKey;
+use app\models\User;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
@@ -121,23 +123,56 @@ class OffersController extends Controller
         $reviews = $query->all();
 
         $chat = new Chat();
+        $chat_key = new ChatKey();
+        $listMessages = [];
+        if ($autor_id == Yii::$app->user->id) {
+            
+            if (Yii::$app->request->isPost) {
+                $chat_key->load(Yii::$app->request->post());
+                if ($chat_key->validate()) {
+                    $chat_id = $chat_key->key;
+                    
+                    $listMessages = $chat->get($chat_id);
+                    
+                    $chat->load(Yii::$app->request->post());
+                    if ($chat->validate()) {
+                        //echo AppController::debug($chat_id);die;
+                            $chat->write([
+                                'user_id' => Yii::$app->user->id,
+                                'text' => $chat->text,
+                                'created_at' => date('H:i'),
+                                'autor_id' => $autor_id,
+                                ], $chat_id);
+                    }    
+                }
+            }
+        } else {
+        
         $chat_id = $id . '-' . Yii::$app->user->id;
         $listMessages = $chat->get($chat_id);
-        //echo AppController::debug($listMessages);die;
-        //https://firebase.google.com/docs/database/rest/structure-data
+        
         if(Yii::$app->request->isPost) {
             $chat->load(Yii::$app->request->post());
             if ($chat->validate()) {
                 
-                $chat->write([
+                if($chat->write([
                     'user_id' => Yii::$app->user->id,
                     'text' => $chat->text,
                     'created_at' => date('H:i'),
                     'autor_id' => $autor_id,
-                ], $chat_id); 
+                    ], $chat_id)) {
+                        Yii::$app->mailer->compose()
+                            ->setFrom('hero34@mail.ru')
+                            ->setTo($offer->user->email)
+                            ->setSubject('Уведомление с сайта byu.loc') // тема письма
+                            ->setTextBody("У вас непрочитанное сообщение в чате, перейдите по ключу $chat_id")
+                            //->setHtmlBody('<p>HTML версия письма</p>')
+                            ->send();
+                        } 
                 
             }
         }
+    }
         
 
         return $this->render('view', [
@@ -146,6 +181,7 @@ class OffersController extends Controller
             'reviews' => $reviews,
             'offersCategory' => $offersCategory,
             'chat' => $chat,
+            'chat_key' => $chat_key,
             'listMessages' => $listMessages,
         ]);
     }
