@@ -17,31 +17,31 @@ use yii\data\Pagination;
 
 class OffersController extends Controller 
 {
-   public function actionAdd() 
-   {
-      $model = new Offer;
+    public function actionAdd() 
+    {
+        $model = new Offer;
 
-      if (Yii::$app->request->isPost) {
-         $model->load(\Yii::$app->request->post());
-         
-         $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-         
-         if ($model->validate()) {
-         
-            $model->upload();
-            $model->user_id = Yii::$app->user->getId();
-            $model->save(false);
-            return $this->redirect('/offers/my');
-         }
-      }
-      
-      $categories = Category::find()->all();
+        if (Yii::$app->request->isPost) {
+            $model->load(\Yii::$app->request->post());
+            
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            
+            if ($model->validate()) {
+            
+                $model->upload();
+                $model->user_id = Yii::$app->user->getId();
+                $model->save(false);
+                return $this->redirect('/offers/my');
+            }
+        }
+        
+        $categories = Category::find()->all();
 
-      return $this->render('add', [
-         'model' => $model,
-         'categories' => $categories,
-      ]);
-   }
+        return $this->render('add', [
+            'model' => $model,
+            'categories' => $categories,
+        ]);
+    }
     
     public function actionEdit($id)
     {
@@ -53,24 +53,24 @@ class OffersController extends Controller
         $categories = Category::find()->all();
 
         if (Yii::$app->request->isPost) {
-         $model->load(\Yii::$app->request->post());
-         
-         $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-         
-         if ($model->validate()) {
-            $model->upload();
-            $model->imageFile = '';
-            if ($model->update()) {
-            return $this->redirect('/offers/my');
+            $model->load(\Yii::$app->request->post());
+            
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            
+            if ($model->validate()) {
+                $model->upload();
+                $model->imageFile = '';
+                if ($model->update()) {
+                return $this->redirect('/offers/my');
+            }
+            }
         }
-         }
-      }
         
-      return $this->render('edit', [
-            'model'=>$model,
-            'categories' => $categories,
-        ]);
-    }
+        return $this->render('edit', [
+                'model'=>$model,
+                'categories' => $categories,
+            ]);
+        }
     
     public function actionDelete($id)
     {
@@ -124,6 +124,7 @@ class OffersController extends Controller
 
         $chat = new Chat();
         $chat_key = new ChatKey();
+        $user = User::findOne(Yii::$app->user->id);
         $listMessages = [];
         if ($autor_id == Yii::$app->user->id) {
             
@@ -133,16 +134,19 @@ class OffersController extends Controller
                     $chat_id = $chat_key->key;
                     
                     $listMessages = $chat->get($chat_id);
+                    $chat->key = $chat_id;
                     
                     $chat->load(Yii::$app->request->post());
                     if ($chat->validate()) {
-                        //echo AppController::debug($chat_id);die;
-                            $chat->write([
-                                'user_id' => Yii::$app->user->id,
+                        //echo AppController::debug($chat);die;
+                            if ($chat->write([
+                                'user_name' => $user->name,
                                 'text' => $chat->text,
                                 'created_at' => date('H:i'),
                                 'autor_id' => $autor_id,
-                                ], $chat_id);
+                                ], $chat->key)) {
+                                    $listMessages = $chat->get($chat->key);
+                                }
                     }    
                 }
             }
@@ -150,13 +154,16 @@ class OffersController extends Controller
         
         $chat_id = $id . '-' . Yii::$app->user->id;
         $listMessages = $chat->get($chat_id);
+        if (!isset($listMessages)) {
+            $listMessages = [];
+        }
         
         if(Yii::$app->request->isPost) {
             $chat->load(Yii::$app->request->post());
             if ($chat->validate()) {
                 
                 if($chat->write([
-                    'user_id' => Yii::$app->user->id,
+                    'user_name' => $user->name,
                     'text' => $chat->text,
                     'created_at' => date('H:i'),
                     'autor_id' => $autor_id,
@@ -164,10 +171,10 @@ class OffersController extends Controller
                         Yii::$app->mailer->compose()
                             ->setFrom('hero34@mail.ru')
                             ->setTo($offer->user->email)
-                            ->setSubject('Уведомление с сайта byu.loc') // тема письма
-                            ->setTextBody("У вас непрочитанное сообщение в чате, перейдите по ключу $chat_id")
-                            //->setHtmlBody('<p>HTML версия письма</p>')
+                            ->setSubject('Уведомление с сайта byu.loc') 
+                            ->setTextBody("Для вас есть сообщение в чате, перейдите в разговор по ключу $chat_id")
                             ->send();
+                            $listMessages = $chat->get($chat_id);
                         } 
                 
             }
@@ -195,10 +202,6 @@ class OffersController extends Controller
         ->with('comments')
         ->all();
         
-        //$offers->where(['=', 'type', 2])->all();
-        
-        //echo AppController::debug($offers);
-        //die;
 
         return $this->render('comments', [
             'offers' => $offers,
@@ -212,7 +215,7 @@ class OffersController extends Controller
             throw new NotFoundHttpException("Комментария не найдено!");
         }
         $offer = Offer::findOne($comment->offer_id);
-        //$comment->delete();
+        
         if ($comment->delete()) {
                     $offer->updateCounters(['number_comments' => -1]);
                 }
@@ -241,8 +244,7 @@ class OffersController extends Controller
 
         $category = Category::findOne($id);
         $categoryName = $category->name;
-        //echo AppController::debug($categoryName);
-        //die;
+
         return $this->render('category', [
             'offers' => $offers,
             'categories' => $categories,

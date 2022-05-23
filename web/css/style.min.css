@@ -2886,3 +2886,8 @@ textarea:invalid {
     outline: 0;
 }
 /*# sourceMappingURL=style.min.css.map */
+.key__form {
+    position: absolute;
+    top: 239px;
+    right: -220px;
+}

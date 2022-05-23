@@ -12,6 +12,7 @@ class Chat extends Model
     public $database;
     protected $dbname = 'chat';
     public $text;
+    public $key;
 
     public function __construct(){
         //$acc = ServiceAccount::fromJsonFile(__DIR__ . '/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json');
@@ -55,6 +56,7 @@ class Chat extends Model
         return [
             ['text', 'required'],
             [['text'], 'string', 'min' => 2, 'max' => 500, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
+            ['key', 'string'],
         ];
     }
 }

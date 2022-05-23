@@ -58,7 +58,6 @@ $this->title = 'Публикация';
         <?php $user = User::findOne($id); ?>  
         <h2 class="ticket__subtitle">Коментарии</h2>
         <div class="ticket__comment-form">
-          <!--<form action="#" method="post" class="form comment-form">-->
           <?php $form = ActiveForm::begin([
             'id' => 'comment-add',
             'method' => 'post',
@@ -123,12 +122,12 @@ $this->title = 'Публикация';
 </main>
 <section class="chat visually-hidden">
   <h2 class="chat__subtitle">Чат с продавцом</h2>
-  <?php if (isset($listMessages)): ?>
+  <?php if (count($listMessages) > 0): ?>
   <ul class="chat__conversation">
     <?php foreach ($listMessages as $message): ?>  
     <li class="chat__message">
       <div class="chat__message-title">
-        <span class="chat__message-author">Вы</span>
+        <span class="chat__message-author"><?= ArrayHelper::getValue($message, 'user_name') ?></span>
         <time class="chat__message-time" datetime="2021-11-18T21:15"><?= ArrayHelper::getValue($message, 'created_at') ?></time>
       </div>
       <div class="chat__message-content">
@@ -143,21 +142,22 @@ $this->title = 'Публикация';
             'method' => 'post',
             'options' => ['class' => 'chat__form'],
             'fieldConfig' => [
-                
                 'inputOptions' => ['class' => 'chat__form-message'],
                ],
           ]); ?>        
     <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
     <?= $form->field($chat, 'text', ['options' => ['tag' => false]])->textarea(['placeholder' => 'Ваше сообщение', 'value' => ''])->label(false); ?>
+    <?php if ($offer->user_id == Yii::$app->user->id): ?>
+    <?= $form->field($chat, 'key', ['options' => ['tag' => false]])->textInput(['class' => 'visually-hidden', 'placeholder' => 'Ключ чата', 'value' => $chat->key])->label(false); ?>
+    <?php endif; ?>
     <?= Html::submitButton('', ['class' => 'chat__form-button']) ?>
   <?php ActiveForm::end() ?>
   <?php if ($offer->user_id == Yii::$app->user->id): ?>
   <?php $form = ActiveForm::begin([
             'id' => 'chat-id__form',
             'method' => 'post',
-            'options' => ['class' => 'chat__form'],
+            'options' => ['class' => 'chat__form key__form'],
             'fieldConfig' => [
-                
                 'inputOptions' => ['class' => 'chat__form-message'],
                ],
           ]); ?>        
