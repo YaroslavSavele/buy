@@ -14,9 +14,28 @@ use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
+use yii\filters\AccessControl;
 
 class OffersController extends Controller 
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['add', 'edit', 'my', 'comments'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['add', 'edit', 'my', 'comments'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionAdd() 
     {
         $model = new Offer;
@@ -48,6 +67,11 @@ class OffersController extends Controller
         $model = Offer::findOne($id);
         if(!$model) {
             throw new NotFoundHttpException("Объявление не найдено!");
+        }
+
+        if ($model->user_id !== Yii::$app->user->id) {
+            
+            return $this->goHome();
         }
 
         $categories = Category::find()->all();

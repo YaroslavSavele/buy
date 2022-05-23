@@ -23,31 +23,31 @@ use yii\authclient\clients\VKontakte;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
+    ///**
+    // * {@inheritdoc}
+    // */
+    //public function behaviors()
+    //{
+    //    return [
+    //        'access' => [
+    //            'class' => AccessControl::className(),
+    //            'only' => ['logout'],
+    //            'rules' => [
+    //                [
+    //                    'actions' => ['logout'],
+    //                    'allow' => true,
+    //                    'roles' => ['@'],
+    //                ],
+    //            ],
+    //        ],
+    //        'verbs' => [
+    //            'class' => VerbFilter::className(),
+    //            'actions' => [
+    //                'logout' => ['post'],
+    //            ],
+    //        ],
+    //    ];
+    //}
 
     /**
      * {@inheritdoc}
@@ -113,8 +113,7 @@ class SiteController extends Controller
          }
       }
    }
-//echo AppController::debug($auth);
-//         die;
+
 
     /**
      * Displays homepage.
@@ -152,19 +151,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+        return $this->redirect('/register'); 
     }
 
     /**
@@ -172,38 +159,38 @@ class SiteController extends Controller
      *
      * @return Response
      */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
+    //public function actionLogout()
+    //{
+    //    Yii::$app->user->logout();
 
-        return $this->goHome();
-    }
+    //    return $this->goHome();
+    //}
 
     /**
      * Displays contact page.
      *
      * @return Response|string
      */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+    //public function actionContact()
+    //{
+    //    $model = new ContactForm();
+    //    if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+    //        Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
+    //        return $this->refresh();
+    //    }
+    //    return $this->render('contact', [
+    //        'model' => $model,
+    //    ]);
+    //}
 
     /**
      * Displays about page.
      *
      * @return string
      */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+    //public function actionAbout()
+    //{
+    //    return $this->render('about');
+    //}
 }

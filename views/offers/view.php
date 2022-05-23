@@ -116,10 +116,13 @@ $this->title = 'Публикация';
         </div>
         <?php endif; ?>
       </div>
+      <?php if (Yii::$app->user->identity): ?>
       <button class="chat-button" type="button" aria-label="Открыть окно чата"></button>
+      <?php endif; ?>  
     </div>
   </section>
 </main>
+<?php if (Yii::$app->user->identity): ?>
 <section class="chat visually-hidden">
   <h2 class="chat__subtitle">Чат с продавцом</h2>
   <?php if (count($listMessages) > 0): ?>
@@ -167,3 +170,4 @@ $this->title = 'Публикация';
   <?php ActiveForm::end() ?>
   <?php endif; ?>
 </section>
+<?php endif; ?>
