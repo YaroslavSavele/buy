@@ -29,8 +29,8 @@ class SearchController extends Controller
                 $publications = $query->all();
                 $count = $query->count();       
                 $title =$this->get_noun_plural_form($count, 'Найдена', 'Найдено', 'Найдено')
-                 ." {$count} " 
-                 .$this->get_noun_plural_form($count, 'публикация', 'публикации', 'публикаций');
+                    ." {$count} " 
+                    .$this->get_noun_plural_form($count, 'публикация', 'публикации', 'публикаций');
 
                 return $this->render('index', [
                     'offers' => $offers,

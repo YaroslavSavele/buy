@@ -68,7 +68,6 @@ $this->title = 'Куплю Продам';
                         'pagination' => $pages,
                         'prevPageLabel' => false,
                         'nextPageLabel' => 'дальше',
-                        //'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'active'],
                         'disableCurrentPageButton' => true
                     ]);
            ?> 

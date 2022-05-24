@@ -11,4 +11,6 @@ class AppController extends Controller
       echo '<pre>' . print_r($arr, true) . '</pre>';
    }
 
+   //echo AppController::debug($chat);die;
+
 }

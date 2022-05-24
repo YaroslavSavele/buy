@@ -162,7 +162,7 @@ class OffersController extends Controller
                     
                     $chat->load(Yii::$app->request->post());
                     if ($chat->validate()) {
-                        //echo AppController::debug($chat);die;
+                        
                             if ($chat->write([
                                 'user_name' => $user->name,
                                 'text' => $chat->text,
@@ -262,7 +262,7 @@ class OffersController extends Controller
         ->all();
         
 
-         $categories = Category::find()
+        $categories = Category::find()
         ->with('offers')
         ->all();
 

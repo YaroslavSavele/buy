@@ -23,35 +23,7 @@ use yii\authclient\clients\VKontakte;
 
 class SiteController extends Controller
 {
-    ///**
-    // * {@inheritdoc}
-    // */
-    //public function behaviors()
-    //{
-    //    return [
-    //        'access' => [
-    //            'class' => AccessControl::className(),
-    //            'only' => ['logout'],
-    //            'rules' => [
-    //                [
-    //                    'actions' => ['logout'],
-    //                    'allow' => true,
-    //                    'roles' => ['@'],
-    //                ],
-    //            ],
-    //        ],
-    //        'verbs' => [
-    //            'class' => VerbFilter::className(),
-    //            'actions' => [
-    //                'logout' => ['post'],
-    //            ],
-    //        ],
-    //    ];
-    //}
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function actions()
     {
         return [
@@ -63,56 +35,56 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
             'auth' => [
-               'class' => 'yii\authclient\AuthAction',
-               'successCallback' => [$this, 'onAuthSuccess'],
-           ],
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
         ];
     }
 
     public function onAuthSuccess($client) 
     {
-      $attributes = $client->getUserAttributes();
-         
+        $attributes = $client->getUserAttributes();
+            
        /* @var $auth Auth */
-       $auth = Auth::find()->where([
-         'source' => $client->getId(),
-         'sourse_id' => $attributes['id'],
-     ])->one();
+        $auth = Auth::find()->where([
+            'source' => $client->getId(),
+            'sourse_id' => $attributes['id'],
+        ])->one();
 
-     if (Yii::$app->user->isGuest) {
-         if ($auth) { // авторизация
-            $user = $auth->user;
-            
-            Yii::$app->user->login($user);
-         } else {
-            $password = Yii::$app->security->generateRandomString(6);
-            $user = new User();
-               if (isset($attributes['first_name'], $attributes['last_name'])) {
-               $user->name = implode(' ', array($attributes['first_name'], $attributes['last_name']));
-               }
-               if (isset($attributes['email'])) {
-                  $user->email = $attributes['email'];
-               } else {
-                  $user->email = $attributes['id'] . '@buy.com';
-               }
-               $user->password = $password;
-               $user->password_repeat = $password;
-               $user->avatar = $attributes['photo'];
-            
-            if ($user->save()) {
-         ;
-               $auth = new Auth();
-               $auth->user_id = $user->id;
-               $auth->source = $client->getId();
-               $auth->sourse_id = $attributes['id'];
-               if ($auth->save()) {
-                  Yii::$app->user->login($user);
-                  $this->redirect('/');
-               }
+        if (Yii::$app->user->isGuest) {
+            if ($auth) { // авторизация
+                $user = $auth->user;
+                
+                Yii::$app->user->login($user);
+            } else {
+                $password = Yii::$app->security->generateRandomString(6);
+                $user = new User();
+                if (isset($attributes['first_name'], $attributes['last_name'])) {
+                $user->name = implode(' ', array($attributes['first_name'], $attributes['last_name']));
+                }
+                if (isset($attributes['email'])) {
+                    $user->email = $attributes['email'];
+                } else {
+                    $user->email = $attributes['id'] . '@buy.com';
+                }
+                $user->password = $password;
+                $user->password_repeat = $password;
+                $user->avatar = $attributes['photo'];
+                
+                if ($user->save()) {
+            ;
+                $auth = new Auth();
+                $auth->user_id = $user->id;
+                $auth->source = $client->getId();
+                $auth->sourse_id = $attributes['id'];
+                if ($auth->save()) {
+                    Yii::$app->user->login($user);
+                    $this->redirect('/');
+                }
+                }
             }
-         }
-      }
-   }
+        }
+    }
 
 
     /**
@@ -143,54 +115,10 @@ class SiteController extends Controller
         ]);
     }
 
-   
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
+
     public function actionLogin()
     {
         return $this->redirect('/register'); 
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    //public function actionLogout()
-    //{
-    //    Yii::$app->user->logout();
-
-    //    return $this->goHome();
-    //}
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    //public function actionContact()
-    //{
-    //    $model = new ContactForm();
-    //    if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-    //        Yii::$app->session->setFlash('contactFormSubmitted');
-
-    //        return $this->refresh();
-    //    }
-    //    return $this->render('contact', [
-    //        'model' => $model,
-    //    ]);
-    //}
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    //public function actionAbout()
-    //{
-    //    return $this->render('about');
-    //}
 }

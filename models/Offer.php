@@ -24,7 +24,7 @@ use app\models\Category;
  */
 class Offer extends \yii\db\ActiveRecord
 {
-   public $imageFile;
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -113,6 +113,6 @@ class Offer extends \yii\db\ActiveRecord
         if ($this->imageFile) {
             $this->img ='uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-         }
+        }
     }
 }

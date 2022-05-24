@@ -14,38 +14,45 @@ class Chat extends Model
     public $text;
     public $key;
 
-    public function __construct(){
-        //$acc = ServiceAccount::fromJsonFile(__DIR__ . '/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json');
-        $firebase = (new Factory)->withServiceAccount(__DIR__ . '/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json')->withDatabaseUri('https://buybase-6aa76-default-rtdb.firebaseio.com');
+    public function __construct()
+    {
+        $firebase = (new Factory)->withServiceAccount(__DIR__ . '/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json')
+        ->withDatabaseUri('https://buybase-6aa76-default-rtdb.firebaseio.com');
         $this->database = $firebase->createDatabase();
     }
-    public function get($chat_id){    
-        
-        
-            return $this->database->getReference($this->dbname . '/' . $chat_id)
-            ->getValue();
-       
-        
+
+    public function get($chat_id)
+    {    
+        return $this->database->getReference($this->dbname . '/' . $chat_id)->getValue();
     }
-    public function insert(array $data) {
+
+    public function insert(array $data) 
+    {
         if (empty($data) || !isset($data)) { return FALSE; }
-        foreach ($data as $key => $value){
-            $this->database->getReference()->getChild($this->dbname)->getChild($key)->set($value);
+        
+            foreach ($data as $key => $value){
+                $this->database->getReference()->getChild($this->dbname)->getChild($key)->set($value);
         }
         return TRUE;
     }
-    public function write(array $data, $chat_id) {
+    
+    public function write(array $data, $chat_id) 
+    {
         if (empty($data) || !isset($data)) { return FALSE; }
         
             $this->database->getReference($this->dbname . '/' . $chat_id)->push($data);
         
         return TRUE;
     }
-    public function delete(int $userID) {
+    
+    public function delete(int $userID) 
+    {
         if (empty($userID) || !isset($userID)) { return FALSE; }
-        if ($this->database->getReference($this->dbname)->getSnapshot()->hasChild($userID)){
-            $this->database->getReference($this->dbname)->getChild($userID)->remove();
-            return TRUE;
+        
+            if ($this->database->getReference($this->dbname)->getSnapshot()->hasChild($userID)) {
+                
+                    $this->database->getReference($this->dbname)->getChild($userID)->remove();
+                    return TRUE;
         } else {
             return FALSE;
         }

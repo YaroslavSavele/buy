@@ -22,9 +22,10 @@ use yii\web\UploadedFile;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-   public $password_repeat;
-   public $imageFile;
-   public static function findIdentity($id)
+    public $password_repeat;
+    public $imageFile;
+    
+    public static function findIdentity($id)
     {
         return self::findOne($id);
     }
@@ -120,6 +121,6 @@ class User extends ActiveRecord implements IdentityInterface
         if ($this->imageFile) {
             $this->avatar ='/uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
-         }
+        }
     }
 }

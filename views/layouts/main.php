@@ -68,9 +68,7 @@ AppAsset::register($this);
       <?php else: ?>
       <?= $form->field($model, 'search', ['options' => ['tag' => false]])->input('search', ['placeholder' => 'Поиск'])->label(false); ?>  
       <?php endif; ?>
-      <a href="<?= Url::to('/search') ?>"><div class="search__icon"></div></a>
-      <!--<div class="search__close-btn"></div>-->
-      <!--<?= Html::submitButton('Найти', ['class' => 'form__button btn btn--medium js-button']) ?>-->
+      <?= Html::submitButton('', ['class' => 'search__icon btn--search']) ?>
     <?php ActiveForm::end() ?>
 
     <?php if ($id = Yii::$app->user->id): ?>
