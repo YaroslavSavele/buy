@@ -130,11 +130,11 @@ $this->title = 'Публикация';
     <?php foreach ($listMessages as $message): ?>  
     <li class="chat__message">
       <div class="chat__message-title">
-        <span class="chat__message-author"><?= ArrayHelper::getValue($message, 'user_name') ?></span>
+        <span class="chat__message-author"><?= Html::encode(ArrayHelper::getValue($message, 'user_name')) ?></span>
         <time class="chat__message-time" datetime="2021-11-18T21:15"><?= ArrayHelper::getValue($message, 'created_at') ?></time>
       </div>
       <div class="chat__message-content">
-        <p><?= ArrayHelper::getValue($message, 'text') ?></p>
+        <p><?= Html::encode(ArrayHelper::getValue($message, 'text')) ?></p>
       </div>
     </li>
     <?php endforeach; ?>
