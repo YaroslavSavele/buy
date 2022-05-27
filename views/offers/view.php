@@ -15,7 +15,7 @@ $this->title = 'Публикация';
       <h1 class="visually-hidden">Карточка объявления</h1>
       <div class="ticket__content">
         <div class="ticket__img">
-          <img src="/<?= Html::encode($offer->img) ?>" srcset="img/ticket@2x.jpg 2x" alt="Изображение товара отсутствует">
+          <img src="/<?= Html::encode($offer->img) ?>" srcset="/<?= Html::encode($offer->img) ?>" alt="Изображение товара отсутствует">
         </div>
         <div class="ticket__info">
           <h2 class="ticket__title"><?= Html::encode($offer->title) ?></h2>

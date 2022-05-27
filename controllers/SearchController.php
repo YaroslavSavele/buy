@@ -2,9 +2,8 @@
 namespace app\controllers;
 
 use Yii;
-use yii\data\ActiveDataProvider;
+
 use yii\web\Controller;
-use app\models\Category;
 use app\models\Offer;
 use app\models\SearchForm;
 

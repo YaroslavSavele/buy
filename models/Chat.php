@@ -3,9 +3,8 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-use yii\db\ActiveRecord;
 use Kreait\Firebase\Factory;
-use Kreait\Firebase\ServiceAccount;
+
 
 class Chat extends Model
 {

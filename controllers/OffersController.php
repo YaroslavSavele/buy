@@ -12,7 +12,6 @@ use app\models\ChatKey;
 use app\models\User;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
-use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 

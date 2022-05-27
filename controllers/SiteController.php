@@ -3,20 +3,10 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 use app\models\Auth;
 use app\models\User;
-use app\controllers\AppController;
-use yii\db\Expression;
-use yii\web\NotFoundHttpException;
 use app\models\Offer;
-use app\models\Comment;
-use yii\db\Query;
 use app\models\Category;
 
 use yii\authclient\clients\VKontakte;
