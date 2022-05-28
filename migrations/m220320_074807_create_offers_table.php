@@ -23,7 +23,7 @@ class m220320_074807_create_offers_table extends Migration
             'price' => $this->integer()->notNull(),
             'type' => $this->integer()->notNull(),
             'description' => $this->text()->notNull(),
-            'created_at' => $this->datetime(),
+            'created_at' => $this->datetime()->defaultValue(new \yii\db\Expression('NOW()')),
             'user_id' => $this->integer()->notNull(),
             'category_id' => $this->integer()->notNull(),
         ]);

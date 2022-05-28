@@ -13,8 +13,8 @@ namespace app\models;
  * @property int $user_id
  * @property int $offer_id
  *
- * @property Offers $offer
- * @property Users $user
+ * @property Offer $offer
+ * @property User $user
  */
 class Comment extends \yii\db\ActiveRecord
 {

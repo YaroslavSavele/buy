@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 
 /**
  * This is the model class for table "auth".
@@ -12,7 +11,7 @@ use Yii;
  * @property string $source
  * @property string $sourse_id
  *
- * @property Users $user
+ * @property User $user
  */
 class Auth extends \yii\db\ActiveRecord
 {

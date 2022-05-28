@@ -16,7 +16,7 @@ $this->title = 'Куплю Продам';
       <li class="categories-list__item">
         <a href="<?= Url::to(['/offers/category', 'id' => $category->id]) ?>" class="category-tile category-tile--default">
           <span class="category-tile__image">
-            <img src="/<?= $adverts[0]->img; ?>" srcset="/img/cat@2x.jpg 2x" alt="Иконка категории">
+            <img src="/<?= $adverts[0]->img; ?>" srcset="/<?= $adverts[0]->img; ?>" alt="Иконка категории">
           </span>
           <span class="category-tile__label"><?= $category->name ?> <span class="category-tile__qty js-qty"><? echo(count($adverts)); ?></span></span>
         </a>
@@ -37,7 +37,7 @@ $this->title = 'Куплю Продам';
         <li class="tickets-list__item">
           <div class="ticket-card ticket-card--color06">
             <div class="ticket-card__img">
-              <img src="/<?= Html::encode($offer->img) ?>" srcset="img/item01@2x.jpg 2x" alt="Изображение товара отсутствует">
+              <img src="/<?= Html::encode($offer->img) ?>" srcset="/<?= Html::encode($offer->img) ?>" alt="Изображение товара отсутствует">
             </div>
             <div class="ticket-card__info">
               <span class="ticket-card__label"><?= $offer->getType(); ?></span>
@@ -72,7 +72,7 @@ $this->title = 'Куплю Продам';
         <li class="tickets-list__item">
           <div class="ticket-card ticket-card--color06">
             <div class="ticket-card__img">
-              <img src="/<?= Html::encode($offer->img) ?>" srcset="img/item01@2x.jpg 2x" alt="Изображение товара отсутствует">
+              <img src="/<?= Html::encode($offer->img) ?>" srcset="/<?= Html::encode($offer->img) ?>" alt="Изображение товара отсутствует">
             </div>
             <div class="ticket-card__info">
               <span class="ticket-card__label"><?= $offer->getType(); ?></span>

@@ -17,7 +17,7 @@ class m220319_151752_create_users_table extends Migration
             'name' => $this->string(128)->notNull(),
             'email' => $this->string(128)->notNull()->unique(),
             'password' => $this->string(255),
-            'date_registration' => $this->datetime(),
+            'date_registration' => $this->datetime()->defaultValue(new \yii\db\Expression('NOW()')),
             'avatar' => $this->string(255),
         ]);
     }

@@ -31,7 +31,7 @@ $this->title = 'Комментарии к моим публикациям';
             <div class="comment-card">
               <div class="comment-card__header">
                 <a href="#" class="comment-card__avatar avatar">
-                  <img src="<?= Html::encode($comment->user->avatar) ?>" srcset="img/avatar03@2x.jpg 2x" alt="Аватар пользователя">
+                  <img src="<?= Html::encode($comment->user->avatar) ?>" srcset="<?= Html::encode($comment->user->avatar) ?>" alt="Аватар пользователя">
                 </a>
                 <p class="comment-card__author"><?= Html::encode($comment->user->name) ?></p>
               </div>

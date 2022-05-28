@@ -45,7 +45,7 @@ $this->title = 'Публикация';
             <li>
               <a href="<?= Url::to(['/offers/category', 'id' => $offer->category->id]) ?>" class="category-tile category-tile--small">
                 <span class="category-tile__image">
-                  <img src="/<?= Html::encode($offersCategory[0]->img) ?>" srcset="img/cat@2x.jpg 2x" alt="Иконка категории">
+                  <img src="/<?= Html::encode($offersCategory[0]->img) ?>" srcset="/<?= Html::encode($offersCategory[0]->img) ?>" alt="Иконка категории">
                 </span>
                 <span class="category-tile__label"><?= Html::encode($offer->category->name) ?></span>
               </a>
@@ -69,7 +69,7 @@ $this->title = 'Публикация';
           ]); ?>    
             <div class="comment-form__header">
               <a href="#" class="comment-form__avatar avatar">
-                <img src="<?= Html::encode($user->avatar); ?>" srcset="/img/avatar@2x.jpg 2x" alt="Аватар пользователя">
+                <img src="<?= Html::encode($user->avatar); ?>" srcset="<?= Html::encode($user->avatar); ?>" alt="Аватар пользователя">
               </a>
               <p class="comment-form__author">Вам слово</p>
             </div>
@@ -97,7 +97,7 @@ $this->title = 'Публикация';
               <div class="comment-card">
                 <div class="comment-card__header">
                   <a href="#" class="comment-card__avatar avatar">
-                    <img src="<?= Html::encode($review->user->avatar) ?>" srcset="img/avatar02@2x.jpg 2x" alt="Аватар пользователя">
+                    <img src="<?= Html::encode($review->user->avatar) ?>" srcset="<?= Html::encode($review->user->avatar) ?>" alt="Аватар пользователя">
                   </a>
                   <p class="comment-card__author"><?= Html::encode($review->user->name) ?></p>
                 </div>

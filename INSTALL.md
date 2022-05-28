@@ -6,16 +6,16 @@
 
 * Клонируйте проект из репозитория, если проект устанавливается локально в Open Server Panel, то его нужно установить в папку domains:  \OpenServer\domains\buy.loc
 * Для загрузки используемых в проекте библиотек и зависимостей воспользуйтесь Composer, откройте консоль в Open Server Panel перейдите в папку проекта:  c:\OpenServer\domains\buy.loc и выполните команду  
-            ~~~
-            composer install
-            ~~~ 
+          
+            `composer install`
+            
 
 * Имя базы buy. Установить базу данных можно двумя способами:
         1. В phpMyAdmin или MySQL Workbench выполнить файл schema-buy.sql.
         2. Выполнить миграции, для этого откройте консоль в Open Server Panel перейдите в папку проекта:  c:\OpenServer\domains\buy.loc и выполните команду  
-            ~~~
-            yii migrate
-            ~~~
-        после этого в phpMyAdmin, в таблицах comments и offers для столбца created_at нужно выставить значение по умолчанию CURRENT_TIMESTAMP 
+            
+            `yii migrate`
+            
+         
 
            

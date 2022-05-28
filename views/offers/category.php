@@ -18,7 +18,7 @@ $this->title = 'Куплю Продам';
         <a href="<?= Url::to(['/offers/category', 'id' => $category->id]) ?>" class="category-tile
             <?php if ($category->id == $id): ?> category-tile--active<?php endif;?>">
           <span class="category-tile__image">
-            <img src="/<?= $adverts[0]->img; ?>" srcset="/img/cat@2x.jpg 2x" alt="Иконка категории">
+            <img src="/<?= $adverts[0]->img; ?>" srcset="/<?= $adverts[0]->img; ?>" alt="Иконка категории">
           </span>
           <span class="category-tile__label"><?= $category->name ?> <span class="category-tile__qty js-qty"><? echo(count($adverts)); ?></span></span>
         </a>

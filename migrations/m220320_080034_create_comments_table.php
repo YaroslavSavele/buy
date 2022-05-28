@@ -19,7 +19,7 @@ class m220320_080034_create_comments_table extends Migration
         $this->createTable('{{%comments}}', [
             'id' => $this->primaryKey(),
             'text' => $this->text(),
-            'created_at' => $this->datetime(),
+            'created_at' => $this->datetime()->defaultValue(new \yii\db\Expression('NOW()')),
             'user_id' => $this->integer()->notNull(),
             'offer_id' => $this->integer()->notNull(),
         ]);

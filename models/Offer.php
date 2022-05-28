@@ -17,9 +17,9 @@ namespace app\models;
  * @property int $user_id
  * @property int $category_id
  *
- * @property Categories $category
- * @property Comments[] $comments
- * @property Users $user
+ * @property Category $category
+ * @property Comment[] $comments
+ * @property User $user
  */
 class Offer extends \yii\db\ActiveRecord
 {

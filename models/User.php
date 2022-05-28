@@ -17,8 +17,8 @@ use yii\web\IdentityInterface;
  * @property string|null $avatar
  * @property int $is_moderator
  *
- * @property Comments[] $comments
- * @property Offers[] $offers
+ * @property Comment[] $comments
+ * @property Offer[] $offers
  */
 class User extends ActiveRecord implements IdentityInterface
 {

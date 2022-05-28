@@ -9,7 +9,6 @@ use app\models\User;
 use app\models\Offer;
 use app\models\Category;
 
-use yii\authclient\clients\VKontakte;
 
 class SiteController extends Controller
 {

@@ -17,7 +17,7 @@ $this->title = 'Результат поиска';
         <li class="search-results__item">
           <div class="ticket-card ticket-card--color05">
             <div class="ticket-card__img">
-              <img src="/<?= Html::encode($publication->img) ?>" srcset="img/item01@2x.jpg 2x" alt="Изображение товара отсутствует">
+              <img src="/<?= Html::encode($publication->img) ?>" srcset="/<?= Html::encode($publication->img) ?>" alt="Изображение товара отсутствует">
             </div>
             <div class="ticket-card__info">
               <span class="ticket-card__label"><?= $publication->getType(); ?></span>
@@ -54,7 +54,7 @@ $this->title = 'Результат поиска';
         <li class="tickets-list__item">
           <div class="ticket-card ticket-card--color06">
             <div class="ticket-card__img">
-              <img src="/<?= Html::encode($offer->img) ?>" srcset="img/item01@2x.jpg 2x" alt="Изображение товара отсутствует">
+              <img src="/<?= Html::encode($offer->img) ?>" srcset="/<?= Html::encode($offer->img) ?>" alt="Изображение товара отсутствует">
             </div>
             <div class="ticket-card__info">
               <span class="ticket-card__label"><?= $offer->getType(); ?></span>

@@ -21,7 +21,7 @@ $this->title = 'Мои публикации';
             <li class="tickets-list__item js-card">
                <div class="ticket-card ticket-card--color06">
                   <div class="ticket-card__img">
-                  <img src="/<?= Html::encode($offer->img) ?>" srcset="img/item06@2x.jpg 2x" alt="Изображение товара отсутствует">
+                  <img src="/<?= Html::encode($offer->img) ?>" srcset="/<?= Html::encode($offer->img) ?>" alt="Изображение товара отсутствует">
                   </div>
                   <div class="ticket-card__info">
                   <span class="ticket-card__label"><?= $offer->getType(); ?></span>
