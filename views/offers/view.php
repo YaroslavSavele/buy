@@ -125,7 +125,7 @@ $this->title = 'Публикация';
 <?php if (Yii::$app->user->identity): ?>
 <section class="chat visually-hidden">
   <h2 class="chat__subtitle">Чат с продавцом</h2>
-  <?php if (count($listMessages) > 0): ?>
+  <?php if (isset($listMessages)): ?>
   <ul class="chat__conversation">
     <?php foreach ($listMessages as $message): ?>  
     <li class="chat__message">

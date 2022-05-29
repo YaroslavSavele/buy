@@ -14,6 +14,7 @@ use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
+use app\services\ChatShow;
 
 class OffersController extends Controller 
 {
@@ -149,60 +150,20 @@ class OffersController extends Controller
         $chat_key = new ChatKey();
         $user = User::findOne(Yii::$app->user->id);
         $listMessages = [];
+        $chatShow = new ChatShow;
+        
         if ($autor_id == Yii::$app->user->id) {
             
             if (Yii::$app->request->isPost) {
                 $chat_key->load(Yii::$app->request->post());
                 if ($chat_key->validate()) {
                     $chat_id = $chat_key->key;
-                    
-                    $listMessages = $chat->get($chat_id);
-                    $chat->key = $chat_id;
-                    
-                    $chat->load(Yii::$app->request->post());
-                    if ($chat->validate()) {
-                        
-                            if ($chat->write([
-                                'user_name' => $user->name,
-                                'text' => $chat->text,
-                                'created_at' => date('H:i'),
-                                'autor_id' => $autor_id,
-                                ], $chat->key)) {
-                                    $listMessages = $chat->get($chat->key);
-                                }
-                    }    
+                    $listMessages = $chatShow->showForAuthor($chat, $chat_id, $user, $autor_id);
                 }
             }
         } else {
-        
-        $chat_id = $id . '-' . Yii::$app->user->id;
-        $listMessages = $chat->get($chat_id);
-        if (!isset($listMessages)) {
-            $listMessages = [];
+            $listMessages = $chatShow->showForCustomer($chat, $user, $autor_id, $id, $offer);
         }
-        
-        if(Yii::$app->request->isPost) {
-            $chat->load(Yii::$app->request->post());
-            if ($chat->validate()) {
-                
-                if($chat->write([
-                    'user_name' => $user->name,
-                    'text' => $chat->text,
-                    'created_at' => date('H:i'),
-                    'autor_id' => $autor_id,
-                    ], $chat_id)) {
-                        Yii::$app->mailer->compose()
-                            ->setFrom('hero34@mail.ru')
-                            ->setTo($offer->user->email)
-                            ->setSubject('Уведомление с сайта byu.loc') 
-                            ->setTextBody("Для вас есть сообщение в чате, перейдите в разговор по ключу $chat_id")
-                            ->send();
-                            $listMessages = $chat->get($chat_id);
-                        } 
-                
-            }
-        }
-    }
         
 
         return $this->render('view', [

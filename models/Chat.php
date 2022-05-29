@@ -14,7 +14,7 @@ class Chat extends Model
 
     public function __construct()
     {
-        $firebase = (new Factory)->withServiceAccount(__DIR__ . '/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json')
+        $firebase = (new Factory)->withServiceAccount('../config/buybase-6aa76-firebase-adminsdk-43fpz-b81badde6b.json')
         ->withDatabaseUri('https://buybase-6aa76-default-rtdb.firebaseio.com');
         $this->database = $firebase->createDatabase();
     }
