@@ -58,7 +58,7 @@ class ChatShow
                 
             }
         }
-        //var_dump($listMessages);die;
+
         return $listMessages;
     }
     
