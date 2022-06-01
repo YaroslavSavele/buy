@@ -86,7 +86,7 @@ class OffersController extends Controller
                 $model->imageFile = '';
                 if ($model->update()) {
                 return $this->redirect('/offers/my');
-            }
+                }
             }
         }
         

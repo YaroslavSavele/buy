@@ -61,7 +61,7 @@ class SiteController extends Controller
                 $user->avatar = $attributes['photo'];
                 
                 if ($user->save()) {
-            ;
+            
                 $auth = new Auth();
                 $auth->user_id = $user->id;
                 $auth->source = $client->getId();

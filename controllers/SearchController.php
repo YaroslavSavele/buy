@@ -29,13 +29,14 @@ class SearchController extends Controller
                     'offers' => $offers,
                     'publications' =>$publications,
                     'title' => $title
-        ]);
+                ]);
             }
         }
         
         return $this->render('index', [
             'offers' => $offers,
-            'publications' =>$publications
+            'publications' =>$publications,
+            'title' => null
         ]);
     }
 
