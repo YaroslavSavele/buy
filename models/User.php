@@ -24,7 +24,7 @@ class User extends ActiveRecord implements IdentityInterface
 {
     public $password_repeat;
     public $imageFile;
-    
+
     public static function findIdentity($id)
     {
         return self::findOne($id);
@@ -73,8 +73,10 @@ class User extends ActiveRecord implements IdentityInterface
             [['imageFile'], 'file', 'extensions' => 'png, jpg'],
             [['is_moderator'], 'integer'],
             [['name', 'email'], 'string', 'max' => 128],
-            ['name', 'match', 'pattern' => "/[а-яА-ЯЁёa-zA-Z\s]/",  'message' => 'Имя не должно содержать цифр и специальных символов'],
-            [['password', 'password_repeat'], 'string',  'length' => [6, 128], 'message' => 'Пароль должен быть не меньше 6 символов'],
+            ['name', 'match', 'pattern' => "/[а-яА-ЯЁёa-zA-Z\s]/",
+                'message' => 'Имя не должно содержать цифр и специальных символов'],
+            [['password', 'password_repeat'], 'string',  'length' => [6, 128],
+                'message' => 'Пароль должен быть не меньше 6 символов'],
             [['password_repeat'], 'compare', 'compareAttribute' => 'password'],
             [['email'], 'unique', 'message' => 'Пользователь с таким имейлом уже зарегестрирован'],
         ];
@@ -119,7 +121,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function upload()
     {
         if ($this->imageFile) {
-            $this->avatar ='/uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $this->avatar = '/uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
         }
     }

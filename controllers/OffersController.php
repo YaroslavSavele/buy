@@ -16,9 +16,8 @@ use yii\data\Pagination;
 use yii\filters\AccessControl;
 use app\services\ChatShow;
 
-class OffersController extends Controller 
+class OffersController extends Controller
 {
-
     public function behaviors()
     {
         return [
@@ -36,24 +35,20 @@ class OffersController extends Controller
         ];
     }
 
-    public function actionAdd() 
+    public function actionAdd()
     {
-        $model = new Offer;
+        $model = new Offer();
 
         if (Yii::$app->request->isPost) {
             $model->load(\Yii::$app->request->post());
-            
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            
             if ($model->validate()) {
-            
                 $model->upload();
                 $model->user_id = Yii::$app->user->getId();
                 $model->save(false);
                 return $this->redirect('/offers/my');
             }
         }
-        
         $categories = Category::find()->all();
 
         return $this->render('add', [
@@ -61,16 +56,15 @@ class OffersController extends Controller
             'categories' => $categories,
         ]);
     }
-    
+
     public function actionEdit($id)
     {
         $model = Offer::findOne($id);
-        if(!$model) {
+        if (!$model) {
             throw new NotFoundHttpException("Объявление не найдено!");
         }
 
         if ($model->user_id !== Yii::$app->user->id) {
-            
             return $this->goHome();
         }
 
@@ -78,9 +72,8 @@ class OffersController extends Controller
 
         if (Yii::$app->request->isPost) {
             $model->load(\Yii::$app->request->post());
-            
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            
+
             if ($model->validate()) {
                 $model->upload();
                 $model->imageFile = '';
@@ -89,17 +82,17 @@ class OffersController extends Controller
                 }
             }
         }
-        
+
         return $this->render('edit', [
-                'model'=>$model,
+                'model' => $model,
                 'categories' => $categories,
             ]);
-        }
-    
+    }
+
     public function actionDelete($id)
     {
         $offer = Offer::findOne($id);
-        if(!$offer) {
+        if (!$offer) {
             throw new NotFoundHttpException("Объявление не найдено!");
         }
         $offer->delete();
@@ -118,7 +111,7 @@ class OffersController extends Controller
     public function actionView($id)
     {
         $offer = Offer::findOne($id);
-        if(!$offer) {
+        if (!$offer) {
             throw new NotFoundHttpException("Объявление не найдено!");
         }
         $autor_id = $offer->user_id;
@@ -128,7 +121,7 @@ class OffersController extends Controller
         ->all();
 
         $comment = new Comment();
-        if(Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
             $comment->load(Yii::$app->request->post());
             if ($comment->validate()) {
                 $comment->offer_id = $id;
@@ -136,8 +129,8 @@ class OffersController extends Controller
                 if ($comment->save()) {
                     $offer->updateCounters(['number_comments' => 1]);
                 }
-                
-                return $this->redirect('/offers/view/:'.$id);
+
+                return $this->redirect('/offers/view/:' . $id);
             }
         }
 
@@ -150,10 +143,8 @@ class OffersController extends Controller
         $chat_key = new ChatKey();
         $user = User::findOne(Yii::$app->user->id);
         $listMessages = [];
-        $chatShow = new ChatShow;
-        
+        $chatShow = new ChatShow();
         if ($autor_id == Yii::$app->user->id) {
-            
             if (Yii::$app->request->isPost) {
                 $chat_key->load(Yii::$app->request->post());
                 if ($chat_key->validate()) {
@@ -164,7 +155,6 @@ class OffersController extends Controller
         } else {
             $listMessages = $chatShow->showForCustomer($chat, $user, $autor_id, $id, $offer);
         }
-        
 
         return $this->render('view', [
             'offer' => $offer,
@@ -177,7 +167,7 @@ class OffersController extends Controller
         ]);
     }
 
-    public function actionComments() 
+    public function actionComments()
     {
         $id = Yii::$app->user->id;
         $offers = Offer::find()
@@ -185,7 +175,6 @@ class OffersController extends Controller
         ->andWhere(['>', 'number_comments', 0])
         ->with('comments')
         ->all();
-        
 
         return $this->render('comments', [
             'offers' => $offers,
@@ -195,14 +184,15 @@ class OffersController extends Controller
     public function actionDeleteComment($id)
     {
         $comment = Comment::findOne($id);
-        if(!$comment) {
+        if (!$comment) {
             throw new NotFoundHttpException("Комментария не найдено!");
         }
         $offer = Offer::findOne($comment->offer_id);
-        
+
         if ($comment->delete()) {
                     $offer->updateCounters(['number_comments' => -1]);
-                }
+        }
+
         return $this->redirect('/offers/comments');
     }
 
@@ -216,11 +206,10 @@ class OffersController extends Controller
             'pageSizeParam' => false,
             'forcePageParam' => false,
             ]);
-        
+
         $offers = $query->offset($pages->offset)
         ->limit($pages->limit)
         ->all();
-        
 
         $categories = Category::find()
         ->with('offers')
@@ -235,7 +224,7 @@ class OffersController extends Controller
             'categoryName' => $categoryName,
             'totalCount' => $totalCount,
             'pages' => $pages,
-            'id'=> $id
+            'id' => $id
         ]);
     }
 }

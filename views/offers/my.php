@@ -16,8 +16,8 @@ $this->title = 'Мои публикации';
         <a href="<?= Url::to('/offers/add') ?>" class="tickets-list__btn btn btn--big"><span>Новая публикация</span></a>
       </div>
       <ul>
-      <?php if (count($offers) > 0): ?>
-        <?php foreach ($offers as $offer): ?>
+      <?php if (count($offers) > 0) : ?>
+            <?php foreach ($offers as $offer) : ?>
             <li class="tickets-list__item js-card">
                <div class="ticket-card ticket-card--color06">
                   <div class="ticket-card__img">
@@ -29,14 +29,18 @@ $this->title = 'Мои публикации';
                      <a href="#"><?= Html::encode($offer->category->name) ?></a>
                   </div>
                   <div class="ticket-card__header">
-                     <h3 class="ticket-card__title"><a href="<?= Url::to(['/offers/edit', 'id' => $offer->id]) ?>"><?= Html::encode($offer->title) ?></a></h3>
+                     <h3 class="ticket-card__title">
+                         <a href="<?= Url::to(['/offers/edit', 'id' => $offer->id]) ?>">
+                             <?= Html::encode($offer->title) ?>
+                         </a>
+                     </h3>
                      <p class="ticket-card__price"><span class="js-sum"><?= Html::encode($offer->price) ?></span> ₽</p>
                   </div>
                   </div>
                   <a class="ticket-card__del js-delete" href="<?= Url::to(['/offers/delete', 'id' => $offer->id]) ?>" type="button">Удалить</a>
                </div>
             </li>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
       <?php endif; ?>
       </ul>
     </div>

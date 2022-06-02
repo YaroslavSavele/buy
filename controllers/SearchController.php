@@ -17,25 +17,25 @@ class SearchController extends Controller
         ->limit(8)
         ->all();
         $publications = [];
-        $model = new SearchForm;
+        $model = new SearchForm();
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
-            if($model->validate()) {
-                $offerSearch = new OfferSearch;
+            if ($model->validate()) {
+                $offerSearch = new OfferSearch();
                 $publications = $offerSearch->getOffers($model->search);
                 $title = $offerSearch->getTitle($model->search);
 
                 return $this->render('index', [
                     'offers' => $offers,
-                    'publications' =>$publications,
+                    'publications' => $publications,
                     'title' => $title
                 ]);
             }
         }
-        
+
         return $this->render('index', [
             'offers' => $offers,
-            'publications' =>$publications,
+            'publications' => $publications,
             'title' => null
         ]);
     }

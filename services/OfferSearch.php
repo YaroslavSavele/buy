@@ -11,23 +11,24 @@ class OfferSearch
         $query = Offer::find()
                 ->where(['like', 'title', $search])
                 ->orderBy(['created_at' => SORT_DESC]);
-        return $query;        
+
+        return $query;
     }
 
     public function getOffers($search)
     {
         $publications = $this->query($search)->all();
-        
-        return $publications;        
+
+        return $publications;
     }
 
     public function getTitle($search)
     {
         $count = $this->query($search)->count();
-        $title =$this->get_noun_plural_form($count, 'Найдена', 'Найдено', 'Найдено')
-                ." {$count} " 
-                .$this->get_noun_plural_form($count, 'публикация', 'публикации', 'публикаций');
-                
+        $title = $this->getNounPluralForm($count, 'Найдена', 'Найдено', 'Найдено')
+                . " {$count} "
+                . $this->getNounPluralForm($count, 'публикация', 'публикации', 'публикаций');
+
         return $title;
     }
 
@@ -38,7 +39,7 @@ class OfferSearch
      * Пример использования:
      * $remaining_minutes = 5;
      * echo "Я поставил таймер на {$remaining_minutes} " .
-     *     get_noun_plural_form(
+     *     getNounPluralForm(
      *         $remaining_minutes,
      *         'минута',
      *         'минуты',
@@ -53,7 +54,7 @@ class OfferSearch
      *
      * @return string Рассчитанная форма множественнго числа
      */
-    private function get_noun_plural_form(int $number, string $one, string $two, string $many): string
+    private function getNounPluralForm(int $number, string $one, string $two, string $many): string
     {
         $number = (int) $number;
         $mod10 = $number % 10;

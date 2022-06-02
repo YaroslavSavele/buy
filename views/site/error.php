@@ -29,11 +29,11 @@ $this->title = $name;
         </li>
       </ul>
       
-      <?php $model = new SearchForm; 
-          if (Yii::$app->request->isPost) {
+      <?php $model = new SearchForm();
+        if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
-          }  
-      ?>
+        }
+        ?>
       <?php $form = ActiveForm::begin([
             'id' => 'error-search',
             'method' => 'post',
@@ -42,7 +42,8 @@ $this->title = $name;
                           'autocomplete' => 'off',
             ],
       ]); ?>
-      <?= $form->field($model, 'search', ['options' => ['tag' => false]])->input('search', ['placeholder' => 'Поиск'])->label(false); ?>
+      <?= $form->field($model, 'search', ['options' => ['tag' => false]])
+          ->input('search', ['placeholder' => 'Поиск'])->label(false); ?>
       <?= Html::submitButton('', ['class' => 'search__icon btn--search']) ?>
       <?php ActiveForm::end() ?>    
       <a class="error__logo logo" href="<?= Url::to('/') ?>">

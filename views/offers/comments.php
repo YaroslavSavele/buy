@@ -12,8 +12,8 @@ $this->title = 'Комментарии к моим публикациям';
   <section class="comments">
     <div class="comments__wrapper">
       <h1 class="visually-hidden">Страница комментариев</h1>
-      <?php if (count($offers) > 0): ?>
-        <?php foreach ($offers as $offer): ?>
+      <?php if (count($offers) > 0) : ?>
+            <?php foreach ($offers as $offer) : ?>
       <div class="comments__block">
         <div class="comments__header">
           <a href="<?= Url::to(['/offers/view', 'id' => $offer->id]) ?>" class="announce-card">
@@ -25,27 +25,27 @@ $this->title = 'Комментарии к моим публикациям';
           </a>
         </div>
         <ul class="comments-list">
-        <?php $comments = $offer->comments; ?>
-          <?php foreach ($comments as $comment): ?>
-          <li class="js-card">
-            <div class="comment-card">
-              <div class="comment-card__header">
-                <a href="#" class="comment-card__avatar avatar">
-                  <img src="<?= Html::encode($comment->user->avatar) ?>" srcset="<?= Html::encode($comment->user->avatar) ?>" alt="Аватар пользователя">
-                </a>
-                <p class="comment-card__author"><?= Html::encode($comment->user->name) ?></p>
-              </div>
-              <div class="comment-card__content">
-                <p><?= Html::encode($comment->text) ?></p>
-              </div>
-              <a class="comment-card__delete js-delete" href="<?= Url::to(['/offers/delete-comment', 'id' => $comment->id]) ?>" type="button">Удалить</a>
-            </div>
-          </li>
-          <?php endforeach; ?>
+                <?php $comments = $offer->comments; ?>
+                <?php foreach ($comments as $comment) : ?>
+                  <li class="js-card">
+                    <div class="comment-card">
+                      <div class="comment-card__header">
+                        <a href="#" class="comment-card__avatar avatar">
+                          <img src="<?= Html::encode($comment->user->avatar) ?>" srcset="<?= Html::encode($comment->user->avatar) ?>" alt="Аватар пользователя">
+                        </a>
+                        <p class="comment-card__author"><?= Html::encode($comment->user->name) ?></p>
+                      </div>
+                      <div class="comment-card__content">
+                        <p><?= Html::encode($comment->text) ?></p>
+                      </div>
+                      <a class="comment-card__delete js-delete" href="<?= Url::to(['/offers/delete-comment', 'id' => $comment->id]) ?>" type="button">Удалить</a>
+                    </div>
+                  </li>
+                <?php endforeach; ?>
         </ul>
       </div>
-        <?php endforeach; ?>
-      <?php else: ?>
+            <?php endforeach; ?>
+      <?php else : ?>
           <p class="comments__message">У ваших публикаций еще нет комментариев.</p>
       <?php endif; ?>
       

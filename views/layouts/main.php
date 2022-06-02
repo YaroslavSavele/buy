@@ -34,7 +34,9 @@ AppAsset::register($this);
       <img src="/img/logo.svg" width="179" height="34" alt="Логотип Куплю Продам">
     </a>
     
-    <nav class="header__user-menu" <?php if (Yii::$app->user->identity): ?>style="display: block"<?php endif; ?>>
+    <nav class="header__user-menu" <?php if (Yii::$app->user->identity) : ?>
+                                     style="display: block"
+                                   <?php endif; ?>>
       <ul class="header__list">
         <li class="header__item">
           <a href="<?= Url::to('/offers/my') ?>">Публикации</a>
@@ -45,10 +47,10 @@ AppAsset::register($this);
       </ul>
     </nav>
 
-    <?php $model = new SearchForm; 
-          if (Yii::$app->request->isPost) {
-            $model->load(Yii::$app->request->post());
-          }  
+    <?php $model = new SearchForm();
+    if (Yii::$app->request->isPost) {
+        $model->load(Yii::$app->request->post());
+    }
     ?>
     <?php $form = ActiveForm::begin([
             'id' => 'search',
@@ -59,20 +61,22 @@ AppAsset::register($this);
             ],
       ]); ?>    
       
-      <?php if (Yii::$app->user->identity): ?>
-      <?= $form->field($model, 'search', ['options' => ['tag' => false]])->input('search', ['placeholder' => 'Поиск', 'style' => 'width: 256px', ])->label(false); ?>
-      <?php else: ?>
-      <?= $form->field($model, 'search', ['options' => ['tag' => false]])->input('search', ['placeholder' => 'Поиск'])->label(false); ?>  
+      <?php if (Yii::$app->user->identity) : ?>
+             <?= $form->field($model, 'search', ['options' => ['tag' => false]])
+                ->input('search', ['placeholder' => 'Поиск', 'style' => 'width: 256px', ])->label(false); ?>
+      <?php else : ?>
+          <?= $form->field($model, 'search', ['options' => ['tag' => false]])
+              ->input('search', ['placeholder' => 'Поиск'])->label(false); ?>
       <?php endif; ?>
       <?= Html::submitButton('', ['class' => 'search__icon btn--search']) ?>
     <?php ActiveForm::end() ?>
 
-    <?php if ($id = Yii::$app->user->id): ?>
-      <?php $user = User::findOne($id); ?>
+    <?php if ($id = Yii::$app->user->id) : ?>
+        <?php $user = User::findOne($id); ?>
     <a class="header__avatar avatar" href="<?= Url::to('/login/logout') ?>" style="display: block">
       <img src="<?= Html::encode($user->avatar); ?>" srcset="<?= Html::encode($user->avatar); ?>" alt="Аватар пользователя">
     </a>
-    <?php else: ?>
+    <?php else : ?>
     <a class="header__input" href="<?= Url::to('/register') ?>">Вход и регистрация</a>
     <?php endif; ?>
   </div>

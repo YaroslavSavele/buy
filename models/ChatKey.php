@@ -14,5 +14,4 @@ class ChatKey extends Model
             ['key', 'string']
         ];
     }
-    
 }

@@ -1,10 +1,10 @@
 <?php
+
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use app\models\User;
-
 
 $this->title = 'Публикация';
 ?>
@@ -54,19 +54,19 @@ $this->title = 'Публикация';
         </div>
       </div>
       <div class="ticket__comments">
-        <?php if ($id = Yii::$app->user->id): ?>
-        <?php $user = User::findOne($id); ?>  
+        <?php if ($id = Yii::$app->user->id) : ?>
+            <?php $user = User::findOne($id); ?>
         <h2 class="ticket__subtitle">Коментарии</h2>
         <div class="ticket__comment-form">
-          <?php $form = ActiveForm::begin([
-            'id' => 'comment-add',
-            'method' => 'post',
-            'options' => ['class' => 'form comment-form'],
-            'fieldConfig' => [
-                'template' => "{label}\n{input}\n{error}",
-                'inputOptions' => ['class' => 'js-field'],
-               ],
-          ]); ?>    
+              <?php $form = ActiveForm::begin([
+                'id' => 'comment-add',
+                'method' => 'post',
+                'options' => ['class' => 'form comment-form'],
+                'fieldConfig' => [
+                    'template' => "{label}\n{input}\n{error}",
+                    'inputOptions' => ['class' => 'js-field'],
+                   ],
+              ]); ?>
             <div class="comment-form__header">
               <a href="#" class="comment-form__avatar avatar">
                 <img src="<?= Html::encode($user->avatar); ?>" srcset="<?= Html::encode($user->avatar); ?>" alt="Аватар пользователя">
@@ -80,19 +80,19 @@ $this->title = 'Публикация';
               </div>
             </div>
             <button class="comment-form__button btn btn--white js-button" type="submit" disabled="">Отправить</button>
-        <?php ActiveForm::end() ?>  
+            <?php ActiveForm::end() ?>
         </div>
-        <?php else: ?>
+        <?php else : ?>
         <div class="ticket__warning">
           <p>Отправка комментариев доступна <br>только для зарегистрированных пользователей.</p>
           <a href="<?= Url::to('/register') ?>" class="btn btn--big">Вход и регистрация</a>
         </div>
         <h2 class="ticket__subtitle">Коментарии</h2>
         <?php endif; ?>    
-        <?php if (count($reviews) > 0): ?>
+        <?php if (count($reviews) > 0) : ?>
         <div class="ticket__comments-list">
           <ul class="comments-list">
-          <?php foreach ($reviews as $review): ?>    
+            <?php foreach ($reviews as $review) : ?>
             <li>
               <div class="comment-card">
                 <div class="comment-card__header">
@@ -107,27 +107,27 @@ $this->title = 'Публикация';
               </div>
             </li>
             <li>
-          <?php endforeach; ?>      
+            <?php endforeach; ?>
           </ul>
         </div>
-        <?php else: ?>
+        <?php else : ?>
         <div class="ticket__message">
           <p>У этой публикации еще нет ни одного комментария.</p>
         </div>
         <?php endif; ?>
       </div>
-      <?php if (Yii::$app->user->identity): ?>
+      <?php if (Yii::$app->user->identity) : ?>
       <button class="chat-button" type="button" aria-label="Открыть окно чата"></button>
       <?php endif; ?>  
     </div>
   </section>
 </main>
-<?php if (Yii::$app->user->identity): ?>
+<?php if (Yii::$app->user->identity) : ?>
 <section class="chat visually-hidden">
   <h2 class="chat__subtitle">Чат с продавцом</h2>
-  <?php if (isset($listMessages)): ?>
+    <?php if (isset($listMessages)) : ?>
   <ul class="chat__conversation">
-    <?php foreach ($listMessages as $message): ?>  
+        <?php foreach ($listMessages as $message) : ?>
     <li class="chat__message">
       <div class="chat__message-title">
         <span class="chat__message-author"><?= Html::encode(ArrayHelper::getValue($message, 'user_name')) ?></span>
@@ -137,10 +137,10 @@ $this->title = 'Публикация';
         <p><?= Html::encode(ArrayHelper::getValue($message, 'text')) ?></p>
       </div>
     </li>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
   </ul>
-  <?php endif; ?>
-  <?php $form = ActiveForm::begin([
+    <?php endif; ?>
+    <?php $form = ActiveForm::begin([
             'id' => 'chat__form',
             'method' => 'post',
             'options' => ['class' => 'chat__form'],
@@ -149,14 +149,17 @@ $this->title = 'Публикация';
                ],
           ]); ?>        
     <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
-    <?= $form->field($chat, 'text', ['options' => ['tag' => false]])->textarea(['placeholder' => 'Ваше сообщение', 'value' => ''])->label(false); ?>
-    <?php if ($offer->user_id == Yii::$app->user->id): ?>
-    <?= $form->field($chat, 'key', ['options' => ['tag' => false]])->textInput(['class' => 'visually-hidden', 'placeholder' => 'Ключ чата', 'value' => $chat->key])->label(false); ?>
+    <?= $form->field($chat, 'text', ['options' => ['tag' => false]])
+        ->textarea(['placeholder' => 'Ваше сообщение', 'value' => ''])->label(false); ?>
+    <?php if ($offer->user_id == Yii::$app->user->id) : ?>
+        <?= $form->field($chat, 'key', ['options' => ['tag' => false]])
+            ->textInput(['class' => 'visually-hidden', 'placeholder' => 'Ключ чата', 'value' => $chat->key])
+            ->label(false); ?>
     <?php endif; ?>
     <?= Html::submitButton('', ['class' => 'chat__form-button']) ?>
-  <?php ActiveForm::end() ?>
-  <?php if ($offer->user_id == Yii::$app->user->id): ?>
-  <?php $form = ActiveForm::begin([
+    <?php ActiveForm::end() ?>
+    <?php if ($offer->user_id == Yii::$app->user->id) : ?>
+        <?php $form = ActiveForm::begin([
             'id' => 'chat-id__form',
             'method' => 'post',
             'options' => ['class' => 'chat__form key__form'],
@@ -165,9 +168,10 @@ $this->title = 'Публикация';
                ],
           ]); ?>        
     <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
-    <?= $form->field($chat_key, 'key', ['options' => ['tag' => false]])->textInput(['placeholder' => 'Введите ключ чата'])->label(false); ?>
-    <?= Html::submitButton('', ['class' => 'chat__form-button']) ?>
-  <?php ActiveForm::end() ?>
-  <?php endif; ?>
+        <?= $form->field($chat_key, 'key', ['options' => ['tag' => false]])
+            ->textInput(['placeholder' => 'Введите ключ чата'])->label(false); ?>
+        <?= Html::submitButton('', ['class' => 'chat__form-button']) ?>
+        <?php ActiveForm::end() ?>
+    <?php endif; ?>
 </section>
 <?php endif; ?>

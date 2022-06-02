@@ -41,13 +41,17 @@ class Offer extends \yii\db\ActiveRecord
             [['title', 'price', 'type', 'description', 'category_id'], 'required', 'message' => 'Обязательное поле'],
             [['price', 'type', 'user_id', 'category_id'], 'integer'],
             [['price'], 'number', 'min' => 100, 'tooSmall' => 'Не менее {min} рублей'],
-            [['description'], 'string', 'min' => 50, 'max' => 1000, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
+            [['description'], 'string', 'min' => 50, 'max' => 1000,
+                'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
             [['created_at', 'img', 'title', 'price', 'type', 'description', 'user_id', 'category_id'], 'safe'],
-            [['title'], 'string', 'min' => 10, 'max' => 100, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
+            [['title'], 'string', 'min' => 10, 'max' => 100,
+                'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
             [['imageFile'], 'file', 'extensions' => 'png, jpg'],
             [['img'], 'string', 'max' => 255],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true,
+                'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true,
+                'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -110,7 +114,7 @@ class Offer extends \yii\db\ActiveRecord
     public function upload()
     {
         if ($this->imageFile) {
-            $this->img ='uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            $this->img = 'uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs('uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
         }
     }

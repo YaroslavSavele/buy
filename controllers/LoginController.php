@@ -14,7 +14,7 @@ class LoginController extends Controller
             if ($loginForm->validate()) {
                 $user = $loginForm->getUser();
                 \Yii::$app->user->login($user);
-                return $this->goHome();   
+                return $this->goHome();
             }
         }
         return $this->render('index', ['model' => $loginForm]);

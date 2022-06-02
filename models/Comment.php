@@ -33,8 +33,8 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             ['text', 'required', 'message' => 'Обязательное поле'],
-            [['text'], 'string', 'min' => 20, 'max' => 1000, 'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
-            
+            [['text'], 'string', 'min' => 20, 'max' => 1000,
+                'tooShort' => "Не менее {min} символов", 'tooLong' => 'Не более {max} символов'],
         ];
     }
 

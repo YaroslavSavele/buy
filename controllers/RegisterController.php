@@ -8,9 +8,8 @@ use app\models\User;
 use yii\web\UploadedFile;
 use yii\filters\AccessControl;
 
-class RegisterController extends Controller 
+class RegisterController extends Controller
 {
-
     public function behaviors()
     {
         return [
@@ -28,22 +27,20 @@ class RegisterController extends Controller
         ];
     }
 
-    public function actionIndex() 
+    public function actionIndex()
     {
-        $model = new User;
+        $model = new User();
         if (Yii::$app->request->isPost) {
             $model->load(\Yii::$app->request->post());
-            
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            
             if ($model->validate()) {
-
                 $model->upload();
                 $model->password = Yii::$app->security->generatePasswordHash($model->password);
                 $model->save(false);
                 return $this->goHome();
             }
         }
+
         return $this->render('index', ['model' => $model]);
     }
 }

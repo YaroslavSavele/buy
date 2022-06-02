@@ -14,5 +14,4 @@ class SearchForm extends Model
             ['search', 'string']
         ];
     }
-    
 }
